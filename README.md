@@ -8,7 +8,7 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 
 * Read _On Machine Learning and Programming Languages_ and annotate
 * Read _A Computational Model for TensorFlow_ and annotate
-* Read _Exploiting Vector_ and annotate
+* Read _Deforestation: Transforming programs to eliminate trees_ and annotate
 
 ## Conclusion
 
