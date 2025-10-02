@@ -1,0 +1,38 @@
+@inproceedings{mlpl,
+  title={On machine learning and programming languages},
+  author={Innes, Mike and Karpinski, Stefan and Shah, Viral and Barber, David and Saito Stenetorp, PLEPS and Besard, Tim and Bradbury, James and Churavy, Valentin and Danisch, Simon and Edelman, Alan and others},
+  year={2018},
+  organization={Association for Computing Machinery (ACM)},
+  annotate={This paper discusses the necessity of a first class language for machine learning (ML) . It explains that Python is the metalanguage used to build expressions in 
+TensorFlow's internal language. So, TensorFlow does not provide you with functions and data structures, it provides a graph-based language which you manipulate through it's 
+API. The authors turn to answer the question: Why create a new language? Since ML models are becoming more complex there is a necessity to add more language constructs to
+TensorFlow's internal language (conditionals, loops, recursions, etc.). Another reason presented is that using a meta-language poses more challenges in order to reason about 
+programs since one needs to reason about the meta-language semantics and the internal language's. This is also a burden for the compiler since it is tracing two executions.
+One approach presented is "define-by-run" where a program is itself the model, using runtime automatic differentiation (AD). However, ML is computational heavy and this
+approach falls short. The authors present the idea of programmable semantics because of the possible flexibility it may allow, providing features similar to macros. For example,
+One could specify where the code should have dataflow semantics. Another idea for such a language would be to have first-class derivatives, mixing symbolic with runtime techniques.
+}
+}
+
+@book{little,
+  title={The little learner: a straight line to deep learning},
+  author={Friedman, Daniel P and Mendhekar, Anurag},
+  year={2023},
+  publisher={MIT Press},
+  annotate={This book covers the basics of deep learning using the programming language Racket (Scheme).}
+}
+
+@book{denotational,
+  title={Denotational semantics: the Scott-Strachey approach to programming language theory},
+  author={Stoy, Joseph E},
+  year={1981},
+  publisher={MIT press}
+}
+
+@inproceedings{reflection,
+  title={Reflection and semantics in Lisp},
+  author={Smith, Brian Cantwell},
+  booktitle={Proceedings of the 11th ACM SIGACT-SIGPLAN symposium on Principles of programming languages},
+  pages={23--35},
+  year={1984}
+}

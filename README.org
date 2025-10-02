@@ -1,0 +1,9 @@
+#+AUTHOR: Isaac H. Lopez Diaz <isaac.lopez@upr.edu>
+#+TITLE: CCOM 6990 - Independent Research
+
+* CCOM 6990 - Independent Research
+Goal: Research on computational/executional models, runtime environments, etc. for Machine Learning (ML) libraries.
+** Reports
+*** Week <2025-09-29 Mon>--<2025-10-03 Fri>
+- Read /On Machine Learning and Programming Languages/ and annotate
+- Read /A Computational Model for TensorFlow/
