@@ -12,7 +12,7 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 
 ## Conclusion
 
-{(b) A Differentiable Core Language
+<!--(b) A Differentiable Core Language
 
 Design a λ-calculus with first-class differentiation (automatic differentiation).
 
@@ -32,4 +32,4 @@ Example: (x*1) → x, relu(relu(x)) → relu(x), fusing linear ops, etc.
 
 Tool: a graph rewriting engine in Haskell that optimizes ML models declaratively.
 
-This ties nicely to your interest in semantics: the rewrite rules are semantics-preserving transformations.}
+This ties nicely to your interest in semantics: the rewrite rules are semantics-preserving transformations. -->
