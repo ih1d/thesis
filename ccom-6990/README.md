@@ -4,10 +4,16 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 
 ## Reports
 
-### Week: September 29, 2025 to October 3, 2025
+### Week 1: September 29, 2025 to October 3, 2025
+
+**GOAL** Read papers on PL and ML, and execution models for ML libraries.
 
 * Read _On Machine Learning and Programming Languages_ and annotate
 * Read _A Computational Model for TensorFlow_ and annotate
+
+### Week 2: October 6, 2025 to October 10, 2025
+
+**GOAL** Review denotational semantics to start designing semantics of DSL
 
 ## Conclusion
 
