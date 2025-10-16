@@ -1,4 +1,4 @@
-@inproceedings{abadi2017computational,
+@inproceedings{tfmodel,
   title={A computational model for TensorFlow: an introduction},
   author={Abadi, Mart{\'\i}n and Isard, Michael and Murray, Derek G},
   booktitle={Proceedings of the 1st ACM SIGPLAN International Workshop on Machine Learning and Programming Languages},
@@ -10,42 +10,37 @@
 
 @inproceedings{omlpl,
   title={On machine learning and programming languages},
-  booktitle={},
   author={Innes, Mike and Karpinski, Stefan and Shah, Viral and Barber, David and Saito Stenetorp, PLEPS and Besard, Tim and Bradbury, James and Churavy, Valentin and Danisch, Simon and Edelman, Alan and others},
   year={2018},
   organization={Association for Computing Machinery (ACM)},
   annotate={This paper argues that a new language for machine learning is needed. There are various arguments: libraries like TensorFlow 
   are already languages in themselves, current languages work as meta-languages, and a new language could improve certain features.}
 }
-@article{streamfusion,
-  title={Stream fusion: From lists to streams to nothing at all},
-  author={Coutts, Duncan and Leshchinskiy, Roman and Stewart, Don},
-  journal={ACM SIGPLAN Notices},
-  volume={42},
-  number={9},
-  pages={315--326},
-  year={2007},
-  publisher={ACM New York, NY, USA},
-  annotate={The main idea behind this paper goes back to the Deforestation paper by Philip Wadler. 
-  The idea is to eliminate intermediate lists that are created when composing functions by working on the co-structure of the list
-  (i.e. the cons instead of the whole list). Also use GHC's rules to perform optimizations.}
+
+@inproceedings{imptograph,
+author = {V\'{e}lez, Tatiana Castro and Khatchadourian, Raffi and Bagherzadeh, Mehdi and Raja, Anita},
+title = {Challenges in migrating imperative deep learning programs to graph execution: an empirical study},
+year = {2022},
+isbn = {9781450393034},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3524842.3528455},
+doi = {10.1145/3524842.3528455},
+abstract = {Efficiency is essential to support responsiveness w.r.t. ever-growing datasets, especially for Deep Learning (DL) systems. DL frameworks have traditionally embraced deferred execution-style DL code that supports symbolic, graph-based Deep Neural Network (DNN) computation. While scalable, such development tends to produce DL code that is error-prone, non-intuitive, and difficult to debug. Consequently, more natural, less error-prone imperative DL frameworks encouraging eager execution have emerged at the expense of run-time performance. While hybrid approaches aim for the "best of both worlds," the challenges in applying them in the real world are largely unknown. We conduct a data-driven analysis of challenges---and resultant bugs---involved in writing reliable yet performant imperative DL code by studying 250 open-source projects, consisting of 19.7 MLOC, along with 470 and 446 manually examined code patches and bug reports, respectively. The results indicate that hybridization: (i) is prone to API misuse, (ii) can result in performance degradation---the opposite of its intention, and (iii) has limited application due to execution mode incompatibility. We put forth several recommendations, best practices, and anti-patterns for effectively hybridizing imperative DL code, potentially benefiting DL practitioners, API designers, tool developers, and educators.},
+booktitle = {Proceedings of the 19th International Conference on Mining Software Repositories},
+pages = {469–481},
+numpages = {13},
+keywords = {deep learning, empirical studies, graph-based execution, hybrid programming paradigms, imperative programs, software evolution},
+location = {Pittsburgh, Pennsylvania},
+series = {MSR '22},
+annotate={This paper surveys and reviews more than 19 million lines of code to try and identify common bugs 
+on code that migrates imperative style to graph execution programs.}
 }
 
-@inproceedings{exploit,
-  title={Exploiting vector instructions with generalized stream fusion},
-  author={Mainland, Geoffrey and Leshchinskiy, Roman and Peyton Jones, Simon},
-  booktitle={Proceedings of the 18th ACM SIGPLAN international conference on Functional programming},
-  pages={37--48},
-  year={2013}
-}
-
-@inproceedings{carlsson1993fudgets,
-  title={Fudgets: A graphical user interface in a lazy functional language},
-  author={Carlsson, Magnus and Hallgren, Thomas},
-  booktitle={Proceedings of the conference on Functional programming languages and computer architecture},
-  pages={321--330},
-  year={1993},
-  annotate={This paper discusses how stream processing can model the processes of graphical user interfaces.
-  The main idea is to abstract over the internals of the library, and provide a high-level API that works by message passing.
-  The paper also presents how easily combinators are derived from the basic building blocks.}
+@inproceedings{reification,
+  title={Reification: Reflection without metaphysics},
+  author={Friedman, Daniel P and Wand, Mitchell},
+  booktitle={Proceedings of the 1984 ACM Symposium on LISP and functional programming},
+  pages={348--355},
+  year={1984}
 }

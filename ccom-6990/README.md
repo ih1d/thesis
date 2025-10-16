@@ -18,3 +18,9 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 * Read _Stream Fusion: From Lists to Streams to Nothing at All_ and annotate
 * Read _Exploiting vector instructions with generalized stream fusion_ and annotate
 * Read _Fudgets: A graphical user interface in a lazy functional languageA graphical user interface in a lazy functional language_ and annotate
+
+### Week 3: October 14, 2025 to October 17
+**GOAL** Read specified papers by advisor and annotate them, and improve current annotations.
+
+* Read _Challenges in migrating imperative deep learning programs to graph execution: an empirical study_
+* Review _On machine learning and programming languages_ and associate to paper above
