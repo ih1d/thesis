@@ -29,3 +29,7 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 ### Week 4: October 20, 2025 to October 24, 2025
 
 **GOAL** Annotate, reflect and assess on principal papers. Read paper on graph semantics.
+
+### Week 5: October 27, 2025 to October 31, 2025
+
+**GOAL** Study lambda calculus, denotational semantics and type systems in order to start introduction for next week.
