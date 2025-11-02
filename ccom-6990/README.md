@@ -32,4 +32,6 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 
 ### Week 5: October 27, 2025 to October 31, 2025
 
-**GOAL** Study lambda calculus, denotational semantics and type systems in order to start introduction for next week.
+**GOAL** Come up with small programs for the language and start introduction.
+
+### Week 6: November 3, 2025 to Novemer 7, 2025
