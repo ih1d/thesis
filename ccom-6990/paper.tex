@@ -3,7 +3,7 @@
 
 \documentclass{article}
 
-\title{A programming language for machine learning}
+\title{Placeholder}
 
 \author{Isaac H. Lopez Diaz}
 
@@ -12,14 +12,18 @@
 
 \section{Introduction}
 
-Machine learning (ML) is often considered a programming paradigm like imperative
-and functional \cite{omlpl}. This means that one can create (or discover \cite{props}) a programming
-language (PL) with the appropriate verbs. 
+This paper presents the design of a reflective programming language (PL) that reasons about its
+graph semantics. A PL is said to be reflective when is able to reason about itself. \cite{smith}
+It can be thought of as the process of converting data into a program. The inverse of this process,
+reification, can be thought of turning a program into data. \cite{reification} These two processes 
+allow a programmer to see the contents of the current execution, much like debugging. However, 
+unlike debugging, one can change the semantics of the language on-the-fly. \cite{duplication}
 
-In an exhaustive code review study of machine learning programs that
-were trying to change from imperative to graph execution \cite{imptograph}
-a large number of bugs were found and classified. These bugs can be a result
-of a lack of a universal language \cite{omlpl}.
+The goal of the language is to better understand graph semantics. One such application would be on 
+machine learning (ML) programs, since ML programs rely on graph execution models. \cite{tfmodel} 
+The conversion from imperative to graph execution has proven to be challenging for programmers, 
+primarily looking to optimize their code, leading to bugs or perfomance issues (the opposite
+of what the programmer intended to do). \cite{imptograph}
 
 \bibliography{refs}
 \bibliographystyle{plain}

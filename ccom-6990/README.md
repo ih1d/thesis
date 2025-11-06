@@ -37,3 +37,6 @@ Goal: Research on computational/executional models, runtime environments, etc. f
 ### Week 6: November 3, 2025 to Novemer 7, 2025
 
 **GOAL** Continue introduction, annotate more references, and possibly simple language constructs
+
+* Complete introduction
+* Added more references and annotate them
