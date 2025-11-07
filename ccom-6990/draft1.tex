@@ -1,5 +1,5 @@
 % Author: Isaac H. Lopez Diaz <isaac.lopez@upr.edu>
-% Description: Literature survey
+% Description: Draft 1
 
 \documentclass{article}
 
@@ -31,9 +31,9 @@ semantics changing from the usual imperative semantics. However, this conversion
 dataflow has proven to be challenging for programmers, primarily looking to optimize their code, leading 
 to bugs or perfomance issues (the opposite of what the programmer intended to do).\cite{imptograph}
 In fact, these extensions are so pervasive that they even alter the execution and modification of 
-state!\cite{tfmodel} Two surveys (\cite{impact}, \cite{imptograph}) give a taxonomy of bugs which in some 
+state!\cite{tfmodel} Two surveys (\cite{impact},~\cite{imptograph}) give a taxonomy of bugs which in some 
 way correlates to programming languages. The cause of bugs can range from lack of features in a language 
-(e.g. lack of type system guarantees) to a misunderstanding of the  change of semantics from imperative to 
+(e.g.\ lack of type system guarantees) to a misunderstanding of the  change of semantics from imperative to 
 graph execution.
 
 The paper is divided in three sections. First, reflective languages are explained and some 
@@ -53,7 +53,7 @@ Evaluating a language usually means consuming expressions and altering the envir
 that is, the bindings of variables.\cite{plai} However, one can also keep track of two
 two more things: the continuation and the store. The continuation describes the control 
 context, while the store describes the global state of the computation. Previous
-implementations have omitted the store \cite{mystery}; for this language the store is
+implementations have omitted the store\cite{mystery}; for this language the store is
 needed, as explained on the next section. 
 
 The language to be designed would be much like a Lisp with the properties mentioned.
@@ -62,10 +62,27 @@ sometimes are just personal preferences, and in Lisp there is no distinction bet
 code and data.\cite{sicp} This allows for the ease of development and design of a 
 reflective language, and manipulating the store of the language in creative ways.
 
-\section{Dataflow Semantics, Bugs and ML}
+\section{ML, PL and Bugs}
+
+The two surveys mentioned in the introduction (\cite{impact},~\cite{imptograph}) analyze bugs
+in ML programs. The surveys categorize the bugs and give examples of each category. Both surveys
+ask a total of 5 research questions (RQs). For the first survey (\cite{imptograph}), the RQs are:
+\begin{itemize}
+    \item RQ1: What bug patterns and corresponding challenges are involved in writing reliable yet performant imperative DL code?
+    \item RQ2: Which best practices and anti-patterns can be extracted from (RQ1)
+\end{itemize}
+
+For the second survey (\cite{impact}), the RQs are:
+\begin{itemize}
+    \item RQ1: Do the bug characteristics depend on the chosen programming language?
+    \item RQ2: Does the application domain influence the bug characteristics within a chosen 
+    programming language?
+    \item RQ3: Are differences in the bug distribution explainable by the features of the 
+    chosen programming language?
+\end{itemize}
 
 \section{The Design of the Language}
-The basis of our evaluator is the metacircular interpreter by 
+
 \bibliography{refs}
 \bibliographystyle{plain}
 \end{document}
