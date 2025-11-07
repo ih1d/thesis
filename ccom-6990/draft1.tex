@@ -26,15 +26,18 @@ own semantics. This creates a burden on programmers since they'd be analyzing tw
 own semantics, the host language like Python and the ML library like TensorFlow.\cite{omlpl}
 
 Although, creating a new language may seem unnecessary, given that ML is having success, there is
-room for improvement. ML libraries have been extended permiting programmers to explicitly use dataflow 
-semantics changing from the usual imperative semantics. However, this conversion from imperative to 
-dataflow has proven to be challenging for programmers, primarily looking to optimize their code, leading 
-to bugs or perfomance issues (the opposite of what the programmer intended to do).\cite{imptograph}
-In fact, these extensions are so pervasive that they even alter the execution and modification of 
-state!\cite{tfmodel} Two surveys (\cite{impact},~\cite{imptograph}) give a taxonomy of bugs which in some 
-way correlates to programming languages. The cause of bugs can range from lack of features in a language 
-(e.g.\ lack of type system guarantees) to a misunderstanding of the  change of semantics from imperative to 
-graph execution.
+room for improvement. In fact, systems like TensorFlow are rooted in PL concepts.\cite{tfmodel} Today, 
+ML libraries have been extended permiting programmers to explicitly use dataflow semantics changing from 
+the usual imperative semantics. However, this conversion from imperative to dataflow has proven to be challenging 
+for programmers, primarily looking to optimize their code, leading to bugs or performance issues (the opposite of 
+what the programmer intended to do).\cite{imptograph} In fact, these extensions are so pervasive that they even 
+alter the execution and modification of state!\cite{tfmodel} Two surveys (\cite{impact},~\cite{imptograph}) give a 
+taxonomy of bugs which in some way correlates to programming languages. The cause of bugs can range from lack of 
+features in a language (e.g.\ lack of type system guarantees) to a misunderstanding of the change of semantics 
+from imperative to graph execution.
+
+The argument is that a reflective language can help a programmer understand dataflow semantics by allowing
+the programmer to see what sort of graph is being built, and how the state is being modified. 
 
 The paper is divided in three sections. First, reflective languages are explained and some 
 small description of the one to be designed is given. Then, dataflow semantics are explained
