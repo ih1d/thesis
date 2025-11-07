@@ -20,26 +20,26 @@ allow a programmer to see the contents of the current execution, much like debug
 unlike debugging, one can change the semantics of the language on-the-fly.\cite{duplication}
 
 The goal of the language is to better understand dataflow semantics. One such application would be on 
-machine learning (ML) programs, since ML programs rely on dataflow graph execution models.\cite{tfmodel} 
-This dataflow graphs have their own semantics. This creates a burden on programmers since
-they'd be analyzing two programs with their own semantics, the host language like Python and
-the ML library like TensorFlow.\cite{omlpl}
+machine learning (ML) programs, since ML programs rely on dataflow graph execution models\cite{tfmodel} 
+(the terms dataflow and graph execution will be used interchangeably). This dataflow graphs have their 
+own semantics. This creates a burden on programmers since they'd be analyzing two programs with their 
+own semantics, the host language like Python and the ML library like TensorFlow.\cite{omlpl}
 
 Today, ML libraries have been extended permiting programmers to explicitly use dataflow semantics
 changing from the usual imperative semantics. However, this conversion from imperative to dataflow
 has proven to be challenging for programmers, primarily looking to optimize their code, leading 
 to bugs or perfomance issues (the opposite of what the programmer intended to do).\cite{imptograph}
-In fact, these extensions are so pervasive that they even alter the execution of state!\cite{tfmodel}
+In fact, these extensions are so pervasive that they even alter the execution and
+modification of state!\cite{tfmodel} Two surveys (\cite{impact}, \cite{imptograph}) give a taxonomy
+of bugs which in some way correlates to programming languages. The cause of bugs can range from
+lack of features in a language (e.g. lack of type system guarantees) to a misunderstanding of the 
+change of semantics from imperative to graph execution.
 
-The argument made is that by having a language that can reason about its semantics, in this case,
-from procedural to dataflow and vice versa, allow a programmer to understand and see what the
-graph is looking like while they are writing their program. Helping them to then use correctly
-imperative or graph execution.
 
 The paper is divided in three sections. First, reflective languages are explained and some 
 small description of the one to be designed is given. Then, dataflow semantics are explained
 in the domain of ML programs. Additionally, the selection of the state of the language is 
-justified. Finally, future work to be done is given.
+justified. 
 
 \section{Reflective languages}
 
@@ -62,9 +62,9 @@ sometimes are just personal preferences, and in Lisp there is no distinction bet
 code and data.\cite{sicp} This allows for the ease of development and design of a 
 reflective language, and manipulating the store of the language in creative ways.
 
-\section{Graph Execution and ML}
+\section{Dataflow Semantics, Bugs and ML}
 
-\section{Future Work}
+\section{The Design of the Language}
 
 \bibliography{refs}
 \bibliographystyle{plain}
