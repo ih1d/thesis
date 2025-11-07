@@ -13,27 +13,35 @@
 \section{Introduction}
 
 This paper presents the design of a reflective programming language (PL) that reasons about its
-dataflow semantics. A PL is said to be reflective when is able to reason about itself. \cite{smith}
+dataflow semantics. A PL is said to be reflective when is able to reason about itself.\cite{smith}
 It can be thought of as the process of converting data into a program. The inverse of this process,
-reification, can be thought of turning a program into data. \cite{reification} These two processes 
+reification, can be thought of turning a program into data.\cite{reification} These two processes 
 allow a programmer to see the contents of the current execution, much like debugging. However, 
-unlike debugging, one can change the semantics of the language on-the-fly. \cite{duplication}
+unlike debugging, one can change the semantics of the language on-the-fly.\cite{duplication}
 
 The goal of the language is to better understand dataflow semantics. One such application would be on 
-machine learning (ML) programs, since ML programs rely on dataflow graph execution models. \cite{tfmodel} 
+machine learning (ML) programs, since ML programs rely on dataflow graph execution models.\cite{tfmodel} 
 The conversion from imperative to graph execution has proven to be challenging for programmers, 
 primarily looking to optimize their code, leading to bugs or perfomance issues (the opposite
-of what the programmer intended to do). \cite{imptograph} 
+of what the programmer intended to do).\cite{imptograph} 
 
 The argument is that by having a language to have programmable semantics that allows
 programmers to specify the semantics (dataflow, procedural, imperative, etc.) leads to
-less bugs. \cite{omlpl} 
+less bugs.\cite{omlpl} 
 
-\section{}
+\section{Reflective languages}
 
-\section{}
+Reflective languages started off with the notion of an infinite tower of interpreters.
+This means that you'd have an interpreter interpreting an interpreter, and so on. In order for a
+language to be reflective, it must have two properties: (1) the ability to reify its own
+interpreter, and (2) the ability to reflect on the reified interpreter.\cite{reification} This
+gives the ability to extend the language syntax and semantics. Think of macros at runtime.
 
-\section{}
+\section{Graph Execution and ML}
+
+\section{Future Work}
+
+The idea is to alter the store of the interpreter (the graph that is building) 
 
 \bibliography{refs}
 \bibliographystyle{plain}
