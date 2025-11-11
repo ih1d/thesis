@@ -1,7 +1,4 @@
-% Author: Isaac H. Lopez Diaz <isaac.lopez@upr.edu>
-% Description: Draft 1
-
-\documentclass{article}
+\documentclass[conference]{IEEEtran}
 
 \title{A reflective language for the analysis of graph execution}
 
@@ -11,80 +8,161 @@
 \maketitle
 
 \section{Introduction}
+\subsection{Problem and Motivation}
 
-This paper presents the design of a reflective programming language (PL) that reasons about its
-dataflow semantics. A PL is said to be reflective when is able to reason about itself.\cite{smith}
-It can be thought of as the process of converting data into a program. The inverse of this process,
-reification, can be thought of turning a program into data.\cite{reification} These two processes 
-allow a programmer to see the contents of the current execution, much like debugging. However, 
-unlike debugging, one can change the semantics of the language on-the-fly.\cite{duplication}
+This paper presents the design of a reflective programming language (RPL) that reasons about its dataflow semantics. The goal of the language is to help programmers better understand and use these semantics. One such application would be on 
+machine learning (ML) programs, since they rely on graph execution models\cite{tfmodel} 
+(the terms dataflow and graph execution will be used interchangeably). These dataflow graphs have their 
+own semantics, creating a burden on programmers since they would be analyzing two programs with their 
+own semantics, for example, the semantics of host a language like Python and the semantics of the ML library TensorFlow.\cite{omlpl}
 
-The goal of the language is to better understand dataflow semantics. One such application would be on 
-machine learning (ML) programs, since they rely on dataflow graph execution models\cite{tfmodel} 
-(the terms dataflow and graph execution will be used interchangeably). This dataflow graphs have their 
-own semantics. This creates a burden on programmers since they'd be analyzing two programs with their 
-own semantics, the host language like Python and the ML library like TensorFlow.\cite{omlpl}
-
-Although, creating a new language may seem unnecessary, given that ML is having success, there is
-room for improvement. In fact, systems like TensorFlow are rooted in PL concepts.\cite{tfmodel} Today, 
-ML libraries have been extended permiting programmers to explicitly use dataflow semantics changing from 
-the usual imperative semantics. However, this conversion from imperative to dataflow has proven to be challenging 
-for programmers, primarily looking to optimize their code, leading to bugs or performance issues (the opposite of 
-what the programmer intended to do).\cite{imptograph} In fact, these extensions are so pervasive that they even 
-alter the execution and modification of state!\cite{tfmodel} Two surveys (\cite{impact},~\cite{imptograph}) give a 
-taxonomy of bugs which in some way correlates to programming languages. The cause of bugs can range from lack of 
-features in a language (e.g.\ lack of type system guarantees) to a misunderstanding of the change of semantics 
-from imperative to graph execution.
-
-The argument is that a reflective language can help a programmer understand dataflow semantics by allowing
+The argument is that an RPL can help understand these semantics by allowing
 the programmer to see what sort of graph is being built, and how the state is being modified. 
 
-The paper is divided in three sections. First, reflective languages are explained and some 
-small description of the one to be designed is given. Then, dataflow semantics are explained
-in the domain of ML programs. Additionally, the selection of the state of the language is 
-justified. Finally, the design of the language is presented.
+\subsection{Background and Related Work}
 
-\section{Reflective languages}
+An RPL is said to be reflective when it is able to reason about
+itself.\cite{smith} They started off as the notion of an infinite tower of
+interpreters, meaning that you would have an interpreter interpreting an
+interpreter, and so on. In order for a language to be reflective, it must have
+two properties: (1) the ability to reify its own interpreter, and 
+(2) the ability to reflect on the reified interpreter.\cite{reification}
+Reflection can be thought of as the process of converting data into a program,
+while reification, the inverse, is turning a program into
+data.\cite{reification} These two processes allow a programmer to see the
+contents of the current execution, much like debugging. However, 
+unlike debugging, one can change the semantics of the language on-the-fly.\cite{duplication}
 
-Reflective languages started off with the notion of an infinite tower of interpreters.
-This means that you'd have an interpreter interpreting an interpreter, and so on. In order for a
-language to be reflective, it must have two properties: (1) the ability to reify its own
-interpreter, and (2) the ability to reflect on the reified interpreter.\cite{reification} This
-gives the ability to extend the language syntax and semantics. 
+Although creating a new language may seem unnecessary, given that ML is having
+success, there is room for improvement. In fact, systems like TensorFlow are
+rooted in programming language concepts.\cite{tfmodel} Today, 
+ML libraries have been extended permiting programmers to explicitly use 
+dataflow semantics changing from the usual imperative semantics. 
+However, this conversion from imperative to dataflow has proven to be 
+challenging for programmers, primarily looking to optimize their code, 
+leading to bugs or performance issues (the opposite of what the programmer
+intended to do).\cite{imptograph} In fact, these extensions are so pervasive
+that they even alter the execution and modification of state.\cite{tfmodel} \cite{imptograph} 
 
-Evaluating a language usually means consuming expressions and altering the environment,
-that is, the bindings of variables.\cite{plai} However, one can also keep track of two
-two more things: the continuation and the store. The continuation describes the control 
-context, while the store describes the global state of the computation. Previous
-implementations have omitted the store\cite{mystery}; for this language the store is
-needed, as explained on the next section. 
+Two surveys (\cite{impact},~\cite{imptograph}) give a 
+taxonomy of bugs which directly (or indirectly) correlates to programming languages. The cause of bugs can range from lack of 
+features in a language (e.g.\ lack of type system) to a misunderstanding of the change of semantics 
+from imperative to graph execution.
 
-The language to be designed would be much like a Lisp with the properties mentioned.
-The reason for choosing Lisp is because it takes care of syntactic details, that
-sometimes are just personal preferences, and in Lisp there is no distinction between
-code and data.\cite{sicp} This allows for the ease of development and design of a 
-reflective language, and manipulating the store of the language in creative ways.
+The paper is divided in three sections. The methodology followed to design the language, partial results, and a conclusion aiming at future work.
+\section{Methodology}
+The aim of the investigation is to design an RPL based on the answers given in both surveys (\cite{impact},~\cite{imptograph}). Both surveys categorize bugs in ML programs and provide examples of each category. The research questions (RQs) are the following:
 
-\section{ML, PL and Bugs}
-
-The two surveys mentioned in the introduction (\cite{impact},~\cite{imptograph}) analyze bugs
-in ML programs. The surveys categorize the bugs and give examples of each category. Both surveys
-ask a total of 5 research questions (RQs). For the first survey (\cite{imptograph}), the RQs are:
 \begin{itemize}
-    \item RQ1: What bug patterns and corresponding challenges are involved in writing reliable yet performant imperative DL code?
-    \item RQ2: Which best practices and anti-patterns can be extracted from (RQ1)
-\end{itemize}
-
-For the second survey (\cite{impact}), the RQs are:
-\begin{itemize}
-    \item RQ1: Do the bug characteristics depend on the chosen programming language?
-    \item RQ2: Does the application domain influence the bug characteristics within a chosen 
+    \item RQ1: What bug patterns and corresponding challenges are involved in writing reliable yet performant imperative (deep learning) DL code?
+    \item RQ2: Which best practices and anti-patterns can be extracted from (RQ1)?
+    \item RQ3: Do the bug characteristics depend on the chosen programming language?
+    \item RQ4: Does the application domain influence the bug characteristics within a chosen 
     programming language?
-    \item RQ3: Are differences in the bug distribution explainable by the features of the 
+    \item RQ5: Are differences in the bug distribution explainable by the features of the 
     chosen programming language?
 \end{itemize}
 
-\section{The Design of the Language}
+Evaluating a language usually means consuming expressions and altering the environment,
+that is, the bindings of variables.\cite{plai} However, one can also keep track of two more things: the continuation and the store. 
+The continuation describes the control context, while the store describes the
+global state of the computation. Previous implementations have omitted the
+store \cite{mystery}; for this language the
+store is needed.
+
+To implement the evaluator (or interpreter) of the language, the Lisp dialect Scheme is being used. The reason is because it takes care of syntactic details that
+sometimes are just personal preferences, and in Scheme there is no distinction between code and data.\cite{sicp} This allows for the ease of development 
+and design of an RPL, and manipulating the store of the language in creative ways. 
+
+What we want to achieve is the ability to reify and reflect between
+procedural and dataflow semantics. That is, evaluating some procedural
+expression gives you some graph, and some graph can be turned into some procedural program. This would allow one to see if the intention of
+the program written matches the expected 
+output. Additionally, the reverse should be 
+possible, if some output is the program one
+is thinking of writing.
+
+\section{Partial Results}
+Currently, there is a partial implementation of the language. We give the 
+skeleton of an RPL which is a simple variant of Scheme, containing only:
+numbers, booleans, and conditionals. The program is able to get an expression
+and pass it to the Scheme evaluator and run it, reifying from the language and reflecting to Scheme.
+
+\begin{verbatim}
+(define (self-eval? e)
+  (or (number? e)
+      (boolean? e)))
+
+(define (if? e)
+  (eq? 'if (car e)))
+
+(define (let? e)
+  (eq? 'let (car e)))
+
+(define (lambda? e)
+  (eq? 'lambda (car e)))
+
+(define (app? e)
+  (pair? e))
+
+;; meta-eval
+(define (meta-eval expr cont)
+  (cond 
+  ((self-eval? expr)
+   (meta-apply expr cont))
+  ((if? expr) 
+   (meta-apply 'eval-if expr cont))
+   ...
+  (else (error 'expr "unknown construct"))))
+
+;; base
+(define (base-eval proc-or-op expr cont)
+  (let 
+  ((f (eval proc-or-op environment)))
+    (f expr cont)))
+
+;; eval if
+(define (eval-if expr cont)
+  (let* ((cnd (cadr expr))
+	 (then (caddr expr))
+	 (els (cadddr expr)))
+ (if (meta-eval cnd cont)
+	(meta-eval then cont)
+	(meta-eval els cont))))
+
+;; meta-apply
+(define (meta-apply atom-or-func . rst)
+  (cond ((self-eval? atom-or-func)
+	 ((car rst) atom-or-func))
+	(else
+	 (let* ((expr (car rst))
+		(cont (cadr rst)))
+	   (cont 
+         (base-eval 
+           atom-or-func expr cont))))))
+
+;; repl/main
+(define (blue)
+  (display "> ")
+  (let ((r (read)))
+    (let ((ans (meta-eval r 
+           (lambda (ans) ans))))
+      (display ans) (newline)
+      (blue))))
+\end{verbatim}
+
+Following the convention of dataflow semantics from Abadi, Isard, and Murray \cite{tfmodel},
+the final language should have those semantics
+defined and implemented, then a programmer can apply
+the processes shown here of reifying and reflection
+to see the transformations between languages.
+
+\section{Conclusion}
+The goal is to present the problem programmers are currently having 
+developing ML programs due to the semantics of graph execution models, and
+bring up as an idea a new language that is able to reason about such semantics.
+Also, a skeleton of a reflective language is given, from which to part from
+and build the complete version.
 
 \bibliography{refs}
 \bibliographystyle{plain}
