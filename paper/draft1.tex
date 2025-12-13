@@ -1,25 +1,10 @@
 \documentclass{article}
 
-\title{A reflective language for the analysis of dataflow semantics}
 
-\author{Isaac Hiram Lopez Diaz}
+\title{A Reflective Language for Dataflow Semantics}
+
+\author{Isaac H. Lopez Diaz}
 
 \begin{document}
-\maketitle
 
-\begin{abstract}
-This paper presents the design and implementation of a reflective programming language able to 
-reason about its dataflow semantics.
-\end{abstract}
-
-\section{Introduction}
-A language (or any system, for that matter) is reflective when it is able to reason about itself.\cite{smith}
-The result from this is that one would have a tower of interpreters, each interpreting the one "above it", meaning,
-an interpreter interpreting an interpreter interpreting an interpreter, and so on. This would give the power of some
-interpreter to "reach down" the tower and change the semantics of the interpreter interpreting it and extend the language. 
-Friedman and Wand simplify this notion by introducing two processes: (1) \textit{reification},  the ability to transform 
-code into data, and (2) \textit{reflection}, the ability to transform data into code. \cite{reification} Now instead of a
-tower of interpreters one can have two interpreters 
-\bibliography{refs}
-\bibliographystyle{plain}
 \end{document}
