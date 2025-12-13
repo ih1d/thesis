@@ -24,6 +24,10 @@ library
     other-modules:
         Language.Expr
         Language.Environment
+        Language.Lexer
+        Language.Parser
+        Language
+        Eval.MTL
     build-depends:    base ^>=4.18.3.0
                     , mtl
                     , fused-effects

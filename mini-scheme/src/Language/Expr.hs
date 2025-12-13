@@ -58,5 +58,6 @@ data Error
 instance Show Error where
     show (UnboundVariable x) = "Unbound variable: " ++ x
     show (MultipleDeclarations x) = "Multiple declarations of: " ++ x
+    show DivisionByZero = "Infinity!"
     show (TypeMismatch expected got) = "Type mismatch, expected: " ++ expected ++ ", got: " ++ show got
     show (ParserError msg) = "Error while parsing: " ++ msg
