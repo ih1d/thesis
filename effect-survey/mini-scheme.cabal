@@ -1,5 +1,5 @@
 cabal-version:      3.0
-name:               effect-survey
+name:               mini-scheme
 version:            0.1.0.0
 synopsis:           Effects Survey
 homepage:           https://github.com/ih1d/thesis
@@ -15,7 +15,7 @@ common warnings
 executable mini-scheme
     import:           warnings
     build-depends:    base ^>=4.18.3.0
-                    , effect-survey
+                    , mini-scheme
     hs-source-dirs:   app
     main-is:          Main.hs
     
