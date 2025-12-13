@@ -1,22 +1,24 @@
 # Mini-Scheme Interpreter
 
-A minimal Scheme-like interpreter implemented with multiple Haskell effect libraries for comparison.
+A subset of Scheme implemented in Haskell with different effect systems.
 
 ## Purpose
 
-This interpreter serves as a testbed for comparing effect system implementations:
+The interpreter is implemented in the following effect systems:
 
-- **MTL** (monad transformers)
+- **mtl** (monad transformers)
 - **fused-effects**
 - **freer-simple**
 - **polysemy**
 - **effectful**
 
-The same language semantics are implemented in each library, allowing direct comparison of:
+The purpose is to directly compare:
 
 - Code ergonomics
 - Performance
 - Expressiveness (especially around effect interaction)
+
+between the 5 effect systems
 
 ## Language Features
 
@@ -67,4 +69,26 @@ x               ; lookup
 (env)                ; show current bindings
 (reset)              ; clear environment
 (quit)               ; exit REPL
+```
+
+## Prerequisites && Building
+
+[Download the haskell ecosystem](https://www.haskell.org/ghcup/).
+
+Then clone this directory:
+
+```sh
+git init mini-scheme
+cd mini-scheme
+git remote add -f origin https://github.com/ih1d/thesis
+git config core.sparseCheckout true
+echo "mini-scheme" >> .git/info/sparse-checkout
+git pull origin main
+```
+
+Then build and run:
+
+```sh
+cabal build
+cabal run <backend> # mtl, fused-effects, freer-simple, polysemy, effectful
 ```
