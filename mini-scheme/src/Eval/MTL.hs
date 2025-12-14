@@ -1,4 +1,4 @@
-module Eval.MTL where
+module Eval.MTL (mtlREPL) where
 
 import Control.Monad.Reader
 import Control.Monad.State
@@ -14,31 +14,50 @@ initEnv = ([], [])
 initLexEnv :: Env
 initLexEnv = []
 
-runMTL :: Expr -> Either Error (Value, [String])
-runMTL e = runExcept $ runWriterT $ evalStateT (runReaderT (evalMTL e) initLexEnv) initEnv
+run :: (Env, [String]) -> Expr -> Either Error ((Value, (Env, [String])), [String])
+run env e = runExcept $ runWriterT $ runStateT (runReaderT (evalMTL e) initLexEnv) env
 
 evalMTL :: Expr -> EvalMTL Value
 evalMTL (Constant n) = pure n
 evalMTL (Var var) = do
     lexEnv <- ask
     case lookup var lexEnv of
-        Just val -> pure val
+        Just expr -> evalMTL expr
         Nothing -> do
             globEnv <- gets fst
             case lookup var globEnv of
                 Nothing -> throwError $ UnboundVariable var
+                Just expr -> evalMTL expr
+evalMTL d@(Define var expr) = do
+    (globalEnv, hist) <- get
+    let menv = extend (var, expr) globalEnv
+    case menv of
+        Left err -> throwError err
+        Right newGlobalEnv -> put (newGlobalEnv, hist ++ [show d]) >> pure Void
+evalMTL (Set var expr) = undefined
+evalMTL (Op op e1 e2) = undefined
+evalMTL (If cnd thn els) = undefined
+evalMTL (Let bindings expr) = undefined
+evalMTL (Begin exprs) = undefined
+evalMTL (Try e1 e2) = undefined
+evalMTL (Fail xpr) = undefined
+evalMTL (Log expr) = undefined
+evalMTL History = undefined
+evalMTL ShowEnv = undefined
+evalMTL Reset = undefined
+evalMTL Quit = undefined
 
-{- | Define String Expr
-    | Set String Expr
-    | Op Operator Expr Expr
-    | If Expr Expr Expr
-    | Let [(String, Expr)] Expr
-    | Begin [Expr]
-    | Try Expr Expr
-    | Fail Expr
-    | Log Expr
-    | History
-    | ShowEnv
-    | Reset
-    | Quit
--}
+mtlREPL :: IO ()
+mtlREPL = go initEnv
+    where
+        go e = do
+            putStr "MTL> "
+            l <- getLine
+            if null l 
+                then go e 
+                else case parse l of
+                        Left err -> putStrLn ("Parse error: " ++ err) >> go e
+                        Right expr -> 
+                            case run e expr of
+                                Left err -> print err >> go e
+                                Right ((v, st), _) -> print v >> go st
