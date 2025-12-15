@@ -34,18 +34,26 @@ evalMTL d@(Define var expr) = do
     case menv of
         Left err -> throwError err
         Right newGlobalEnv -> put (newGlobalEnv, hist ++ [show d]) >> pure Void
-evalMTL (Set var expr) = undefined
+evalMTL s@(Set var expr) = do
+    lexEnv <- ask
+    case lookup var lexEnv of
+        Nothing -> do
+            (globalEnv, hist) <- get
+            case lookup var globalEnv of
+                Nothing -> throwError $ UnboundVariable var
+                Just _ -> put (upsert globalEnv (var, expr), hist ++ [show s]) >> pure Void
+        Just _ -> undefined
 evalMTL (Op op e1 e2) = undefined
 evalMTL (If cnd thn els) = undefined
 evalMTL (Let bindings expr) = undefined
 evalMTL (Begin exprs) = undefined
 evalMTL (Try e1 e2) = undefined
-evalMTL (Fail xpr) = undefined
+evalMTL (Fail expr) = undefined
 evalMTL (Log expr) = undefined
-evalMTL History = undefined
-evalMTL ShowEnv = undefined
-evalMTL Reset = undefined
-evalMTL Quit = undefined
+evalMTL History = pure Void
+evalMTL ShowEnv = pure Void
+evalMTL Reset = pure Void
+evalMTL Quit = pure Void
 
 mtlREPL :: IO ()
 mtlREPL = go initEnv

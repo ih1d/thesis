@@ -30,6 +30,10 @@ library
         Language.Lexer
         Language.Parser
         Eval.MTL
+        Eval.Polysemy
+        Eval.Effectful
+        Eval.Freer
+        Eval.FusedEffects
     build-depends:    base ^>=4.18.3.0
                     , mtl
                     , fused-effects
