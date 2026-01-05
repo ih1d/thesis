@@ -1,6 +1,6 @@
 # Thesis
 
-Develop a domain specific language for machine learning.
+A Reflective Language to analyze dataflow semantics
 
 ## [CCOM 6990 - Independent Research](ccom-6990/README.md)
 
