@@ -6,8 +6,6 @@ A Reflective Language to analyze dataflow semantics
 
 This section contains all my reports and notes from the course on the fall semester of 2025-2026.
 
-## [Mini-Scheme](mini-scheme/README.md)
+## [Circular AutoDiff](cad/README.md)
 
-This directory contains an implementation of a subset of Scheme with the purpose
-to compare the performance, expressiveness and ergonomics of different effect
-systems.
+This contains an implementation of AutoDiff in Haskell that uses circular programming for reverse mode.
