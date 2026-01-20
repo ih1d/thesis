@@ -6,6 +6,6 @@ A Reflective Language to analyze dataflow semantics
 
 This section contains all my reports and notes from the course on the fall semester of 2025-2026.
 
-## [Circular AutoDiff](cad/README.md)
+## [fast-tensors](fast-tensors/README.md)
 
-This contains an implementation of AutoDiff in Haskell that uses circular programming for reverse mode.
+This section contains the implementation of an efficient tensor library for haskell.
