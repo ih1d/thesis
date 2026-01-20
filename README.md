@@ -5,7 +5,3 @@ A Reflective Language to analyze dataflow semantics
 ## [CCOM 6990 - Independent Research](ccom-6990/README.md)
 
 This section contains all my reports and notes from the course on the fall semester of 2025-2026.
-
-## [fast-tensors](fast-tensors/README.md)
-
-This section contains the implementation of an efficient tensor library for haskell.
