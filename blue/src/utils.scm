@@ -19,3 +19,5 @@
 	'()
 	(cons i (loop (+ i 1)))))
   (loop 0))
+
+(define identity (lambda (x) x))

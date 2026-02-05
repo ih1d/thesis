@@ -18,3 +18,4 @@
   (if (eq? 'nothing (lookup var env))
       (cons (cons var val) env)
       (env-loop env)))
+

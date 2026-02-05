@@ -2,29 +2,43 @@
 ;; Description: Store module (DAG)
 
 ;; Nodes
-(define (make-node id op inputs)
-  (cons (cons 'node id)
-	(cons op inputs)))
+(define (make-node id kind) (cons id kind))
 
-(define (node-id node)
-  (cdr (car node)))
+(define (node-id node) (car node))
 
-(define (node-op node)
-  (car (cdr node)))
+(define (node-kind node) (cdr node))
 
-(define (node-inputs node)
-  (cdr (cdr node)))
+(define (set-node-id! node id) (set-car! node id))
 
-(define (set-node-id! node id)
-  (set-cdr! (car node) id))
+(define (set-node-kind! node kind) (set-cdr! node kind))
 
-(define (set-node-op! node op)
-  (set-cdr! (car node) op))
+;; Edges
+(define (make-edge node1 node2)
+  (cons (node-id node1)
+	(node-id node2)))
 
-(define (set-node-inputs! node inputs)
-  (set-cdr! (cdr node) inputs))
+(define (fst edge) (car edge))
 
-(define (is-node? node-or-edge)
-  (eq? 'node (car (car node-or-edge))))
+(define (snd edge) (cdr edge))
 
-;; store/dag operations
+(define (set-fst! edge node)
+  (set-car! edge (node-id node)))
+
+(define (set-snd! edge node)
+  (set-cdr! edge (node-id node)))
+
+(define (edge=? edge1 edge2)
+  (and (eq? (fst edge1)
+	    (fst edge2))
+       (eq? (snd edge1)
+	    (snd edge2))))
+
+;; DAG (a list of edges)
+(define the-empty-DAG '())
+
+(define (empty? DAG) (null? DAG))
+
+(define (contains? DAG edge)
+  (cond ((null? DAG) #f)
+	((edge=? edge (car DAG)) #t)
+	(else (contains? (cdr DAG) edge))))

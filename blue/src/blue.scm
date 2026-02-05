@@ -1,9 +1,11 @@
 ;; Author: Isaac H. Lopez Diaz
 ;; Description: Main module
+(load "tensor.scm")
 
 ;; expr
 (define (constant? expr)
   (or (number? expr)
+      (tensor? expr)
       (boolean? expr)))
 
 (define (var? expr)
@@ -13,8 +15,9 @@
   (eq? 'if (car expr)))
 
 ;; eval
-
-;; apply
+(define (blue-eval expr)
+  (cond ((constant? expr) expr)
+	(else (error expr "not yet implemented"))))
 
 ;; repl
 (define (blue level turn)
