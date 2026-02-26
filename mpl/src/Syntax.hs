@@ -1,20 +1,25 @@
 module Syntax where
+import Data.List (intercalate)
 
 type Id = String
 
 data Types
     = IntT
     | BoolT
+    | DoubleT
     deriving (Eq)
 instance Show Types where
     show IntT = "int"
     show BoolT = "bool"
+    show DoubleT = "double"
 
 data Value
     = IntV Integer
+    | DoubleV Double
     | BoolV Bool
 instance Show Value where
     show (IntV i) = show i
+    show (DoubleV d) = show d
     show (BoolV True) = "true"
     show (BoolV False) = "false"
 
@@ -33,6 +38,8 @@ data Op
     | GtEq
     | Lt
     | LtEq
+    | Pipe
+
 instance Show Op where
     show Add = "+"
     show Sub = "-"
@@ -48,14 +55,28 @@ instance Show Op where
     show GtEq = ">="
     show Lt = "<"
     show LtEq = "<="
+    show Pipe = "|>"
 
 data Expr
     = Const Value
     | UnOp Op Expr
     | BinOp Op Expr Expr
     | If Expr Expr Expr
+    | Var Id
+    | Let Id Expr Expr
+    | LetF Id [Id] Expr
+    | LetR Id [Id] Expr
+    | Lam [Id] Expr
+    | App Expr Expr
+
 instance Show Expr where
     show (Const v) = show v
     show (UnOp o e) = show o ++ " " ++ show e
     show (BinOp op e0 e1) = show e0 ++ " " ++ show op ++ " " ++ show e1
     show (If cnd e0 e1) = "if " ++ show cnd ++ " then " ++ show e0 ++ " else " ++ show e1
+    show (Var v) = v
+    show (Let v e0 e1) = "let " ++ v ++ " = " ++ show e0 ++ " in " ++ show e1
+    show (LetF f args e) = "let " ++ f ++ " " ++ unwords args ++ " = " ++ show e
+    show (LetR f args e) = "let rec " ++ f ++ " " ++ unwords args ++ " = " ++ show e
+    show (Lam args e) = "lambda " ++ unwords args ++ " -> " ++ show e
+    show (App e0 e1) = show e0 ++ " " ++ show e1
