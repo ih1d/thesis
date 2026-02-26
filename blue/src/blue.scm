@@ -10,6 +10,9 @@
 (define (if? expr)
   (eq? 'if (car expr)))
 
+(define (switch? expr)
+  (eq? 'switch (car expr)))
+
 ;; accessors
 (define (if-pred expr) (cadr expr))
 
@@ -54,7 +57,7 @@
       (write level) (write '-) (write turn) (display ": ")
       (write ans)
       (newline)
-      (write level) (write '-) (write (+ 1 turn)) (display " GRAPH> ")
+      (write level) (write '-) (write (+ 1 turn)) (display " GRAPH ]=> ")
       (let ((r (read)))
 	(if (eq? r 'switch)
 	    ((Mcont '(switch to blue)) (graph level turn))
