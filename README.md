@@ -10,6 +10,6 @@ This section contains all my reports and notes from the course on the fall semes
 
 This directory contains my technical reports during my Master's Degree.
 
-## [El MegaProbe Language](mpl/README.md)
+## [El MegaProbe Language](https://github.com/ih1d/mpl/README.md)
 
 A programming language with algebraic effects for high performance genomics computation
