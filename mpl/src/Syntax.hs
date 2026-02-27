@@ -1,5 +1,7 @@
 module Syntax where
-import Data.List (intercalate)
+
+import Data.Bits (shiftR, (.&.))
+import Data.Word (Word64)
 
 type Id = String
 
@@ -7,21 +9,29 @@ data Types
     = IntT
     | BoolT
     | DoubleT
+    | FunT
     deriving (Eq)
+
 instance Show Types where
     show IntT = "int"
     show BoolT = "bool"
     show DoubleT = "double"
+    show FunT = "<function>"
 
 data Value
     = IntV Integer
     | DoubleV Double
     | BoolV Bool
+    | DNA ([Word64], Int)
+    | RNA ([Word64], Int)
+
 instance Show Value where
     show (IntV i) = show i
     show (DoubleV d) = show d
     show (BoolV True) = "true"
     show (BoolV False) = "false"
+    show (DNA (ws, len)) = showSeq dnaChar ws len
+    show (RNA (ws, len)) = showSeq rnaChar ws len
 
 data Op
     = Add
@@ -80,3 +90,24 @@ instance Show Expr where
     show (LetR f args e) = "let rec " ++ f ++ " " ++ unwords args ++ " = " ++ show e
     show (Lam args e) = "lambda " ++ unwords args ++ " -> " ++ show e
     show (App e0 e1) = show e0 ++ " " ++ show e1
+
+showSeq :: (Word64 -> Char) -> [Word64] -> Int -> String
+showSeq decode = go
+  where
+    go [] _ = []
+    go _ 0 = []
+    go (w:rest) remaining =
+        let n = min 32 remaining
+        in [decode ((w `shiftR` (2 * (n - 1 - i))) .&. 3) | i <- [0..n-1]] ++ go rest (remaining - n)
+
+dnaChar :: Word64 -> Char
+dnaChar 0 = 'A'
+dnaChar 1 = 'C'
+dnaChar 2 = 'G'
+dnaChar _ = 'T'
+
+rnaChar :: Word64 -> Char
+rnaChar 0 = 'A'
+rnaChar 1 = 'C'
+rnaChar 2 = 'G'
+rnaChar _ = 'U'

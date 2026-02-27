@@ -26,6 +26,7 @@ library
     other-modules:
         Syntax
         Lexer
+        MPL
     build-depends:    base   ^>=4.18.3.0
                     , parsec
                     , transformers

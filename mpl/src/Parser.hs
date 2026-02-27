@@ -4,7 +4,9 @@ import Data.Functor.Identity (Identity)
 import Text.Parsec
 import Text.Parsec.Expr
 import Text.Parsec.String (Parser)
-
+import Data.Bits (shiftL, (.|.))
+import Data.List (foldl')
+import Data.Word
 import Lexer
 import Syntax
 
@@ -40,8 +42,40 @@ parseBool = Const . BoolV <$> (True <$ mplReserved "true" <|> False <$ mplReserv
 parseVar :: Parser Expr
 parseVar = Var <$> mplIdentifier
 
+parseDNA :: Parser Expr
+parseDNA = do
+    dna <- many1 (char 'A' <|> char 'C' <|> char 'G' <|> char 'T')
+    let len = length dna
+        encode :: Char -> Word64
+        encode 'A' = 0
+        encode 'C' = 1
+        encode 'G' = 2
+        encode 'T' = 3
+        encode _   = 0
+        pack [] = []
+        pack cs = let (chunk, rest) = splitAt 32 cs
+                      w = foldl' (\acc c -> (acc `shiftL` 2) .|. encode c) 0 chunk
+                  in w : pack rest
+    return $ Const (DNA (pack dna, len))
+
+parseRNA :: Parser Expr
+parseRNA = do
+    rna <- many1 (char 'A' <|> char 'C' <|> char 'G' <|> char 'U')
+    let len = length rna
+        encode :: Char -> Word64
+        encode 'A' = 0
+        encode 'C' = 1
+        encode 'G' = 2
+        encode 'U' = 3
+        encode _   = 0
+        pack [] = []
+        pack cs = let (chunk, rest) = splitAt 32 cs
+                      w = foldl' (\acc c -> (acc `shiftL` 2) .|. encode c) 0 chunk
+                  in w : pack rest
+    return $ Const (RNA (pack rna, len))
+
 parseAtom :: Parser Expr
-parseAtom = mplParens parseExpr <|> parseInt <|> parseBool <|> parseVar
+parseAtom = mplParens parseExpr <|> parseInt <|> parseBool <|> parseDNA <|> parseRNA <|> parseVar
 
 parseApp :: Parser Expr
 parseApp = foldl1 App <$> many1 parseAtom
