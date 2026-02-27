@@ -2,6 +2,7 @@ module Syntax where
 
 import Data.Bits (shiftR, (.&.))
 import Data.Word (Word64)
+import Data.Vector (Vector, (!))
 
 type Id = String
 
@@ -9,21 +10,25 @@ data Types
     = IntT
     | BoolT
     | DoubleT
-    | FunT
+    | DNAT
+    | RNAT
+    | ProteinT
     deriving (Eq)
 
 instance Show Types where
     show IntT = "int"
     show BoolT = "bool"
     show DoubleT = "double"
-    show FunT = "<function>"
+    show DNAT = "DNA"
+    show RNAT = "RNA"
+    show ProteinT = "Protein"
 
 data Value
     = IntV Integer
     | DoubleV Double
     | BoolV Bool
-    | DNA ([Word64], Int)
-    | RNA ([Word64], Int)
+    | DNA (Vector Word64, Int)
+    | RNA (Vector Word64, Int)
 
 instance Show Value where
     show (IntV i) = show i
@@ -91,14 +96,14 @@ instance Show Expr where
     show (Lam args e) = "lambda " ++ unwords args ++ " -> " ++ show e
     show (App e0 e1) = show e0 ++ " " ++ show e1
 
-showSeq :: (Word64 -> Char) -> [Word64] -> Int -> String
-showSeq decode = go
+showSeq :: (Word64 -> Char) -> Vector Word64 -> Int -> String
+showSeq decode v = go 0
   where
-    go [] _ = []
     go _ 0 = []
-    go (w:rest) remaining =
-        let n = min 32 remaining
-        in [decode ((w `shiftR` (2 * (n - 1 - i))) .&. 3) | i <- [0..n-1]] ++ go rest (remaining - n)
+    go idx remaining =
+        let w = v ! idx
+            n = min 32 remaining
+        in [decode ((w `shiftR` (2 * (n - 1 - i))) .&. 3) | i <- [0..n-1]] ++ go (idx + 1) (remaining - n)
 
 dnaChar :: Word64 -> Char
 dnaChar 0 = 'A'

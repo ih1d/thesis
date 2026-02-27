@@ -7,6 +7,7 @@ import Text.Parsec.String (Parser)
 import Data.Bits (shiftL, (.|.))
 import Data.List (foldl')
 import Data.Word
+import Data.Vector (fromList)
 import Lexer
 import Syntax
 
@@ -56,7 +57,7 @@ parseDNA = do
         pack cs = let (chunk, rest) = splitAt 32 cs
                       w = foldl' (\acc c -> (acc `shiftL` 2) .|. encode c) 0 chunk
                   in w : pack rest
-    return $ Const (DNA (pack dna, len))
+    return $ Const (DNA (fromList (pack dna), len))
 
 parseRNA :: Parser Expr
 parseRNA = do
@@ -72,7 +73,7 @@ parseRNA = do
         pack cs = let (chunk, rest) = splitAt 32 cs
                       w = foldl' (\acc c -> (acc `shiftL` 2) .|. encode c) 0 chunk
                   in w : pack rest
-    return $ Const (RNA (pack rna, len))
+    return $ Const (RNA (fromList (pack rna), len))
 
 parseAtom :: Parser Expr
 parseAtom = mplParens parseExpr <|> parseInt <|> parseBool <|> parseDNA <|> parseRNA <|> parseVar

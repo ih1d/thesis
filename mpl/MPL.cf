@@ -1,6 +1,0 @@
--- BNFc for El MegaProbe Language
--- Author: Isaac H. Lopez Diaz
--- Licensed under MIT
-
--- comments
-comment "(*" "*)" ;
