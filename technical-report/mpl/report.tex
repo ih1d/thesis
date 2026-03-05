@@ -14,22 +14,31 @@ University of Puerto Rico Rio Piedras}
 \end{abstract}
 
 \section{Introduction}
-This technical report presents a programming language with the focus to help
-The Blueprint of Life project.
 
+This technical report introduces El MegaProbe Language (MPL), which is a
+statically-typed, ML-like language with first-class bioinformatics primitives
+that targets GPUs for fast processing of genomic data. The goal of the language is 
+to support The Blueprint of Life project by changing their current programs in 
+R or Python and bring them to MPL\@.
+
+The report is divided in the following sections:
+\begin{itemize}
+    \item Methods: which give implementation details of the Language
+    \item Results: which give a summary of the results obtained
+    \item Conclusions, and
+    \item Future work
+\end{itemize}
 \section{Methods}
 
-The language used for implementation was Haskell \cite{haskell}.
-
-\begin{itemize}
-    \item For parsing: parsing combinators \cite{parser}
-\end{itemize}
+The language used to implement was Haskell~\cite{haskell} since it is a lazy, purely functional
+PL\@. Parser combinators~\cite{parser} were used for lexing and parsing. Backus-Naur Form (BNF)
+was used to design the syntax of the language.
 
 \section{Results}
 
 \section{Conclusions}
 
-\section{Future work}
+\section{Future Work}
 
 \bibliography{refs}
 \bibliographystyle{plain}
