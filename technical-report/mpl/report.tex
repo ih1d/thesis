@@ -15,28 +15,29 @@ University of Puerto Rico Rio Piedras}
 
 \section{Introduction}
 
-This technical report introduces El MegaProbe Language (MPL), which is a
-statically-typed, ML-like language with first-class bioinformatics primitives
-that targets GPUs for fast processing of genomic data. The goal of the language is 
-to support The Blueprint of Life project by changing their current programs in 
-R or Python and bring them to MPL\@.
+This technical report introduces El MegaProbe Language (MPL), a statically-typed
+functional language with ML-like syntax that has first-class bioinformatics and 
+bioinformatics primitives. 
 
-The report is divided in the following sections:
-\begin{itemize}
-    \item Methods: which give implementation details of the Language
-    \item Results: which give a summary of the results obtained
-    \item Conclusions, and
-    \item Future work
-\end{itemize}
+The argument for functional languages has been widely studied~\cite{whyfp}~\cite{totalfp}, hence,
+the reason for developing a lazy, functional language. 
+
 \section{Methods}
 
+Building the language follows the convention from Krishnamurthi~\cite{plai}. 
 The language used to implement was Haskell~\cite{haskell} since it is a lazy, purely functional
 PL\@. Parser combinators~\cite{parser} were used for lexing and parsing. Backus-Naur Form (BNF)
 was used to design the syntax of the language.
 
+\subsection{Syntax}
+
+The grammar follows that from ML with additional primitives and a pipe operator.
+
 \subsection{Dealing with laziness}
 Because Haskell is a lazy language, values are represented as pointers in the heap.~\cite{levity}
+
 \section{Results}
+
 
 \section{Conclusions}
 
