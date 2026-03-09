@@ -7,6 +7,7 @@
 *.log
 *.sync*
 *.out
+*.toc
 
 # Cabal build directory
 dist-newstyle/
