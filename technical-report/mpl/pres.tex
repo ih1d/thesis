@@ -1,5 +1,7 @@
 \documentclass{beamer}  
 
+\usepackage{backnaur}
+
 \definecolor{iupired}{HTML}{e70033} 
 \definecolor{iupigray}{HTML}{babcbe}
 \definecolor{iupiblack}{HTML}{261c02} 
@@ -45,7 +47,7 @@
 \frametitle{Introduction}
 \begin{itemize}
     \item El MegaProbe Language: Statically-typed, ML-like language with bioinformatics primitives
-    \item Help The Blueprint of Life project with a language that can handle large genome sequences
+    \item Help The Blueprint of Life project with a language that can handle large genome sequences and process files
 \end{itemize}
 \end{frame}
 
@@ -55,23 +57,30 @@ The language implementation follows the convention from Krishnamurthi~\cite{plai
 \begin{itemize}
     \item Lexing and parsing: parser combinators~\cite{parser}
     \item Type Checking and Evaluating: Pattern Matching
+    \item Dataframe: Apache Arrow API
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Syntax}
+
+\end{frame}
 
 \begin{frame}
+    \frametitle{Operational Semantics}
+\end{frame}
+\begin{frame}
+
 \frametitle{Current Results}
 \begin{itemize}
-    \item An interpreter
+    \item A (sort of) compiler 
     \item DNA and RNA sequences as primitives, and higher-order functions like transcribe DNA sequence and reverse complement.
-    \item (minimal) Apache Arrow bindings for fast reading csv files and producing Apache Arrow Tables.
+    \item (minimal) Apache Arrow bindings for fast reading and writing csv files, and producing Apache Arrow Tables (dataframes).
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Conclusions}
-A fully functional interpreter has been built with most common programming constructs and primitives, with additional bioinformatics
-primitives and functions.
 
 \begin{center}
     \includegraphics[height=3.0cm]{megaprobe.png}
@@ -84,8 +93,8 @@ primitives and functions.
 \begin{itemize}
     \item Add ADTs and pattern matching
     \item Necessary bindings to Apache Arrow
-    \item The Plan Monad: How should we evaluate large dataframes? Laziness!
-    \item Compile to GPU
+    \item Allow user to compile to OpenCL and implement
+    \item Allow user to compile to NVIDIA and implement
 \end{itemize}
 \end{frame}
 
