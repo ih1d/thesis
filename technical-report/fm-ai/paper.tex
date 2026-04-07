@@ -1,5 +1,7 @@
 \documentclass{acmart}
 
+\usepackage{natbib}
+
 \title{Using Alloy to Model Agentic Programming}
 
 \author{Isaac H. Lopez Diaz}
@@ -11,5 +13,32 @@
 \end{abstract}
 
 \maketitle
+
+% INTRO FOR NOW
+This paper presents an Alloy model~\cite{alloy} for an AI agent
+program where the agent can read and write to files, and create pull
+requests (PRs). The goal of this paper is to show the benefits
+of formal methods (FM) applied to agentic programs. This paper
+is divided the following way:
+
+% PROBLEM
+A problem one can highlight is the separation between the purpose
+of the AI Agent and the tools it has available. Tools are concrete
+abstractions of what the agent is allowed to do, while a purpose
+is a natural-language description of the goal. Here lies the problem:
+Natural-language is ambiguous. We redefine purpose to the less ambiguous
+noun operation, more specifically an agent has a set of operations. 
+We define an operation as a specific task that lies within the allowable
+actions a tool has. We can summarize in a more general way:
+Agentic programs rely on natural-language leading to ambiguous requirements.
+
+There are news, articles, blogs, etc. about the problems created by
+under specified purposes.
+
+% POTENTIAL SOLUTION
+FM can be a potential solution by defining a more strict language
+that removes the ambiguiuty of natural-languages.
+\bibliography{refs}
+\bibliographystyle{plain}
 
 \end{document}
