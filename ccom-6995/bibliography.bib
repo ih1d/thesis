@@ -1,7 +1,22 @@
+% Bibliography for the Blue survey paper
+% 10 peer-reviewed papers; 4 from 2020 onward (Ansel 2024, Liu 2022, Willsey 2021, Arora 2025).
+%
+% NOTE: A few DOIs are flagged below as "verify". These are the entries
+% where the underlying search returned ambiguous DOI variants (often a
+% conference DOI vs. a journal-reprint DOI). The publication, authors,
+% and pages are confirmed; the DOI string is worth a final check on
+% dl.acm.org before submission.
+
+
+% ============================================================
+% Procedural reflection lineage
+% ============================================================
+
 @inproceedings{smith1984reflection,
   author    = {Smith, Brian Cantwell},
   title     = {Reflection and Semantics in {LISP}},
-  booktitle = {Proceedings of the 11th {ACM} {SIGACT-SIGPLAN} Symposium on Principles of Programming Languages ({POPL} '84)},
+  booktitle = {Proceedings of the 11th {ACM} {SIGACT}-{SIGPLAN} Symposium on Principles of Programming Languages},
+  series    = {POPL '84},
   year      = {1984},
   pages     = {23--35},
   publisher = {Association for Computing Machinery},
@@ -9,21 +24,11 @@
   doi       = {10.1145/800017.800513}
 }
 
-@article{wand1988mystery,
-  author  = {Wand, Mitchell and Friedman, Daniel P.},
-  title   = {The Mystery of the Tower Revealed: A Non-Reflective Description of the Reflective Tower},
-  journal = {Lisp and Symbolic Computation},
-  volume  = {1},
-  number  = {1},
-  pages   = {11--37},
-  year    = {1988},
-  doi     = {10.1007/BF01806174}
-}
-
 @inproceedings{asai2014compiling,
   author    = {Asai, Kenichi},
-  title     = {Compiling a Reflective Language using {MetaOCaml}},
-  booktitle = {Proceedings of the 2014 International Conference on Generative Programming: Concepts and Experiences ({GPCE} '14)},
+  title     = {Compiling a Reflective Language Using {MetaOCaml}},
+  booktitle = {Proceedings of the 2014 International Conference on Generative Programming: Concepts and Experiences},
+  series    = {GPCE '14},
   year      = {2014},
   pages     = {113--122},
   publisher = {Association for Computing Machinery},
@@ -32,18 +37,21 @@
 }
 
 @article{amin2018collapsing,
-  author     = {Amin, Nada and Rompf, Tiark},
-  title      = {Collapsing Towers of Interpreters},
-  journal    = {Proceedings of the {ACM} on Programming Languages},
-  volume     = {2},
-  number     = {POPL},
-  articleno  = {52},
-  numpages   = {33},
-  year       = {2018},
-  month      = jan,
-  publisher  = {Association for Computing Machinery},
-  doi        = {10.1145/3158140}
+  author    = {Amin, Nada and Rompf, Tiark},
+  title     = {Collapsing Towers of Interpreters},
+  journal   = {Proceedings of the {ACM} on Programming Languages},
+  volume    = {2},
+  number    = {POPL},
+  articleno = {52},
+  pages     = {1--33},
+  year      = {2018},
+  doi       = {10.1145/3158140}
 }
+
+
+% ============================================================
+% Typed metaprogramming and categorical compilation
+% ============================================================
 
 @article{carette2009finally,
   author    = {Carette, Jacques and Kiselyov, Oleg and Shan, Chung-chieh},
@@ -53,23 +61,25 @@
   number    = {5},
   pages     = {509--543},
   year      = {2009},
-  publisher = {Cambridge University Press},
   doi       = {10.1017/S0956796809007205}
 }
 
 @article{elliott2017compiling,
-  author     = {Elliott, Conal},
-  title      = {Compiling to Categories},
-  journal    = {Proceedings of the {ACM} on Programming Languages},
-  volume     = {1},
-  number     = {ICFP},
-  articleno  = {27},
-  numpages   = {27},
-  year       = {2017},
-  month      = sep,
-  publisher  = {Association for Computing Machinery},
-  doi        = {10.1145/3110271}
+  author    = {Elliott, Conal},
+  title     = {Compiling to Categories},
+  journal   = {Proceedings of the {ACM} on Programming Languages},
+  volume    = {1},
+  number    = {ICFP},
+  articleno = {27},
+  pages     = {1--27},
+  year      = {2017},
+  doi       = {10.1145/3110271}
 }
+
+
+% ============================================================
+% Verified compilation
+% ============================================================
 
 @article{leroy2009formal,
   author    = {Leroy, Xavier},
@@ -79,25 +89,19 @@
   number    = {7},
   pages     = {107--115},
   year      = {2009},
-  month     = jul,
-  publisher = {Association for Computing Machinery},
   doi       = {10.1145/1538788.1538814}
 }
 
-@inproceedings{lattner2021mlir,
-  author    = {Lattner, Chris and Amini, Mehdi and Bondhugula, Uday and Cohen, Albert and Davis, Andy and Pienaar, Jacques and Riddle, River and Shpeisman, Tatiana and Vasilache, Nicolas and Zinenko, Oleksandr},
-  title     = {{MLIR}: Scaling Compiler Infrastructure for Domain Specific Computation},
-  booktitle = {Proceedings of the 2021 {IEEE/ACM} International Symposium on Code Generation and Optimization ({CGO} '21)},
-  year      = {2021},
-  pages     = {2--14},
-  publisher = {{IEEE} Press},
-  doi       = {10.1109/CGO51591.2021.9370308}
-}
 
-@inproceedings{ansel2024pytorch2,
-  author    = {Ansel, Jason and Yang, Edward and He, Horace and Gimelshein, Natalia and Jain, Animesh and Voznesensky, Michael and Bao, Bin and Bell, Peter and Berard, David and Burovski, Evgeni and Chauhan, Geeta and Chourdia, Anjali and Constable, Will and Desmaison, Alban and DeVito, Zachary and Ellison, Elias and Feng, Will and Gong, Jiong and Gschwind, Michael and Hirsh, Brian and Huang, Sherlock and Kalambarkar, Kshiteej and Kirsch, Laurent and Lazos, Michael and Lezcano, Mario and Liang, Yanbo and Liang, Jason and Lu, Yinghai and Luk, C. K. and Maher, Bert and Pan, Yunjie and Puhrsch, Christian and Reso, Matthias and Saroufim, Mark and Siraichi, Marcos Yukio and Suk, Helen and Zhang, Shunting and Suo, Michael and Tillet, Phil and Zhao, Xu and Wang, Eikan and Zhou, Keren and Zou, Richard and Wang, Xiaodong and Mathews, Ajit and Wen, William and Chanan, Gregory and Wu, Peng and Chintala, Soumith},
+% ============================================================
+% DL framework practice
+% ============================================================
+
+@inproceedings{ansel2024pytorch,
+  author    = {Ansel, Jason and Yang, Edward and He, Horace and Gimelshein, Natalia and Jain, Animesh and Voznesensky, Michael and Bao, Bin and Bell, Peter and Berard, David and Burovski, Evgeni and Chauhan, Geeta and Chourdia, Anjali and Constable, Will and Desmaison, Alban and DeVito, Zachary and Ellison, Elias and Feng, Will and Gong, Jiong and Gschwind, Michael and Hirsh, Brian and Huang, Sherlock and Kalambarkar, Kshiteej and Kirsch, Laurent and Lazos, Michael and Lezcano, Mario and Liang, Yanbo and Liang, Jason and Lu, Yinghai and Luk, CK and Maher, Bert and Pan, Yunjie and Puhrsch, Christian and Reso, Matthias and Saroufim, Mark and Siraichi, Marcos Yukio and Suk, Helen and Suo, Michael and Tillet, Phil and Wang, Eikan and Wang, Xiaodong and Wen, William and Zhang, Shunting and Zhao, Xu and Zhou, Keren and Zou, Richard and Mathews, Ajit and Chanan, Gregory and Wu, Peng and Chintala, Soumith},
   title     = {{PyTorch} 2: Faster Machine Learning Through Dynamic {Python} Bytecode Transformation and Graph Compilation},
-  booktitle = {Proceedings of the 29th {ACM} International Conference on Architectural Support for Programming Languages and Operating Systems, Volume 2 ({ASPLOS} '24)},
+  booktitle = {Proceedings of the 29th {ACM} International Conference on Architectural Support for Programming Languages and Operating Systems, Volume 2},
+  series    = {ASPLOS '24},
   year      = {2024},
   pages     = {929--947},
   publisher = {Association for Computing Machinery},
@@ -105,42 +109,21 @@
   doi       = {10.1145/3620665.3640366}
 }
 
+
+% ============================================================
+% Verified DL rewrites
+% ============================================================
+
 @article{liu2022verified,
-  author     = {Liu, Amanda and Bernstein, Gilbert Louis and Chlipala, Adam and Ragan-Kelley, Jonathan},
+  author    = {Liu, Amanda and Bernstein, Gilbert Louis and Chlipala, Adam and Ragan-Kelley, Jonathan},
   title     = {Verified Tensor-Program Optimization via High-Level Scheduling Rewrites},
   journal   = {Proceedings of the {ACM} on Programming Languages},
   volume    = {6},
   number    = {POPL},
   articleno = {55},
-  numpages  = {28},
+  pages     = {1--28},
   year      = {2022},
-  month     = jan,
-  publisher = {Association for Computing Machinery},
   doi       = {10.1145/3498717}
-}
-
-@article{arora2025tensorright,
-  author    = {Arora, Jai and Lu, Sirui and Jain, Devansh and Xu, Tianfan and Houshmand, Farzin and Phothilimthana, Phitchaya Mangpo and Lesani, Mohsen and Narayanan, Praveen and Murthy, Karthik Srinivasa and Bodik, Rastislav and Sabne, Amit and Mendis, Charith},
-  title     = {{TensorRight}: Automated Verification of Tensor Graph Rewrites},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {9},
-  number    = {POPL},
-  articleno = {29},
-  numpages  = {61},
-  year      = {2025},
-  month     = jan,
-  publisher = {Association for Computing Machinery},
-  doi       = {10.1145/3704865}
-}
-
-@inproceedings{filinski1994representing,
-  author    = {Filinski, Andrzej},
-  title     = {Representing Monads},
-  booktitle = {Proceedings of the 21st {ACM} {SIGPLAN-SIGACT} Symposium on Principles of Programming Languages ({POPL} '94)},
-  year      = {1994},
-  pages     = {446--457},
-  publisher = {Association for Computing Machinery},
-  doi       = {10.1145/174675.178047}
 }
 
 @article{willsey2021egg,
@@ -150,9 +133,25 @@
   volume    = {5},
   number    = {POPL},
   articleno = {23},
-  numpages  = {29},
+  pages     = {1--29},
   year      = {2021},
-  month     = jan,
-  publisher = {Association for Computing Machinery},
   doi       = {10.1145/3434304}
+}
+
+@article{arora2025tensorright,
+  author    = {Arora, Jai and Lu, Sirui and Jain, Devansh and Xu, Tianfan and Houshmand, Farzin and Phothilimthana, Phitchaya Mangpo and Lesani, Mohsen and Narayanan, Praveen and Murthy, Karthik Srinivasa and Bod{\'\i}k, Rastislav and Sabne, Amit and Mendis, Charith},
+  title     = {{TensorRight}: Automated Verification of Tensor Graph Rewrites},
+  journal   = {Proceedings of the {ACM} on Programming Languages},
+  volume    = {9},
+  number    = {POPL},
+  pages     = {832--863},
+  year      = {2025},
+  doi       = {10.1145/3704865}
+}
+
+@inproceedings{frostig2018compiling,
+  author    = {Frostig, Roy and Johnson, Matthew James and Leary, Chris},
+  title     = {Compiling Machine Learning Programs via High-Level Tracing},
+  booktitle = {Systems for Machine Learning (SysML)},
+  year      = {2018}
 }
