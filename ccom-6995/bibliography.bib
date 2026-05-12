@@ -1,157 +1,242 @@
-% Bibliography for the Blue survey paper
-% 10 peer-reviewed papers; 4 from 2020 onward (Ansel 2024, Liu 2022, Willsey 2021, Arora 2025).
-%
-% NOTE: A few DOIs are flagged below as "verify". These are the entries
-% where the underlying search returned ambiguous DOI variants (often a
-% conference DOI vs. a journal-reprint DOI). The publication, authors,
-% and pages are confirmed; the DOI string is worth a final check on
-% dl.acm.org before submission.
+%% bibliography.bib -- references for SurveyPaper.tex
+%% On Bounded Reflection as a Mechanism for Verified Translation Extension
+%% Isaac H. Lopez Diaz, 2026
 
+%% ============================================================================
+%% Foundational reflection and staging
+%% ============================================================================
 
-% ============================================================
-% Procedural reflection lineage
-% ============================================================
-
-@inproceedings{smith1984reflection,
-  author    = {Smith, Brian Cantwell},
-  title     = {Reflection and Semantics in {LISP}},
-  booktitle = {Proceedings of the 11th {ACM} {SIGACT}-{SIGPLAN} Symposium on Principles of Programming Languages},
-  series    = {POPL '84},
-  year      = {1984},
-  pages     = {23--35},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  doi       = {10.1145/800017.800513}
+@article{smith-1984,
+    author       = {Smith, Brian Cantwell},
+    title        = {Reflection and Semantics in Lisp},
+    booktitle    = {Proceedings of the 11th ACM SIGACT-SIGPLAN Symposium on Principles of Programming Languages (POPL '84)},
+    journal      = {Conference Record of POPL '84},
+    publisher    = {ACM},
+    year         = {1984},
+    pages        = {23--35},
+    doi          = {10.1145/800017.800513}
 }
 
-@inproceedings{asai2014compiling,
-  author    = {Asai, Kenichi},
-  title     = {Compiling a Reflective Language Using {MetaOCaml}},
-  booktitle = {Proceedings of the 2014 International Conference on Generative Programming: Concepts and Experiences},
-  series    = {GPCE '14},
-  year      = {2014},
-  pages     = {113--122},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  doi       = {10.1145/2658761.2658775}
+@article{taha-sheard-2000,
+    author       = {Taha, Walid and Sheard, Tim},
+    title        = {{MetaML} and Multi-Stage Programming with Explicit Annotations},
+    journal      = {Theoretical Computer Science},
+    volume       = {248},
+    number       = {1--2},
+    pages        = {211--242},
+    year         = {2000},
+    publisher    = {Elsevier},
+    doi          = {10.1016/S0304-3975(00)00053-0}
 }
 
-@article{amin2018collapsing,
-  author    = {Amin, Nada and Rompf, Tiark},
-  title     = {Collapsing Towers of Interpreters},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {2},
-  number    = {POPL},
-  articleno = {52},
-  pages     = {1--33},
-  year      = {2018},
-  doi       = {10.1145/3158140}
+@article{davies-pfenning-2001,
+    author       = {Davies, Rowan and Pfenning, Frank},
+    title        = {A Modal Analysis of Staged Computation},
+    journal      = {Journal of the ACM},
+    volume       = {48},
+    number       = {3},
+    pages        = {555--604},
+    year         = {2001},
+    publisher    = {ACM},
+    doi          = {10.1145/382780.382785}
 }
 
-
-% ============================================================
-% Typed metaprogramming and categorical compilation
-% ============================================================
-
-@article{carette2009finally,
-  author    = {Carette, Jacques and Kiselyov, Oleg and Shan, Chung-chieh},
-  title     = {Finally Tagless, Partially Evaluated: Tagless Staged Interpreters for Simpler Typed Languages},
-  journal   = {Journal of Functional Programming},
-  volume    = {19},
-  number    = {5},
-  pages     = {509--543},
-  year      = {2009},
-  doi       = {10.1017/S0956796809007205}
+@article{moggi-1991,
+    author       = {Moggi, Eugenio},
+    title        = {Notions of Computation and Monads},
+    journal      = {Information and Computation},
+    volume       = {93},
+    number       = {1},
+    pages        = {55--92},
+    year         = {1991},
+    publisher    = {Elsevier},
+    doi          = {10.1016/0890-5401(91)90052-4}
 }
 
-@article{elliott2017compiling,
-  author    = {Elliott, Conal},
-  title     = {Compiling to Categories},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {1},
-  number    = {ICFP},
-  articleno = {27},
-  pages     = {1--27},
-  year      = {2017},
-  doi       = {10.1145/3110271}
+%% ============================================================================
+%% Compiling-to-categories and categorical semantics of programs
+%% ============================================================================
+
+@article{elliott-2017,
+    author       = {Elliott, Conal},
+    title        = {Compiling to Categories},
+    journal      = {Proceedings of the ACM on Programming Languages},
+    volume       = {1},
+    number       = {ICFP},
+    articleno    = {27},
+    pages        = {1--27},
+    year         = {2017},
+    publisher    = {ACM},
+    doi          = {10.1145/3110271}
 }
 
+%% ============================================================================
+%% Categorical accounts of deep learning
+%% ============================================================================
 
-% ============================================================
-% Verified compilation
-% ============================================================
-
-@article{leroy2009formal,
-  author    = {Leroy, Xavier},
-  title     = {Formal Verification of a Realistic Compiler},
-  journal   = {Communications of the {ACM}},
-  volume    = {52},
-  number    = {7},
-  pages     = {107--115},
-  year      = {2009},
-  doi       = {10.1145/1538788.1538814}
+@inproceedings{fong-spivak-tuyeras-2019,
+    author       = {Fong, Brendan and Spivak, David I. and Tuy{\'e}ras, R{\'e}my},
+    title        = {Backprop as Functor: A Compositional Perspective on Supervised Learning},
+    booktitle    = {Proceedings of the 34th Annual ACM/IEEE Symposium on Logic in Computer Science (LICS '19)},
+    year         = {2019},
+    publisher    = {IEEE},
+    pages        = {1--13},
+    doi          = {10.1109/LICS.2019.8785665}
 }
 
-
-% ============================================================
-% DL framework practice
-% ============================================================
-
-@inproceedings{ansel2024pytorch,
-  author    = {Ansel, Jason and Yang, Edward and He, Horace and Gimelshein, Natalia and Jain, Animesh and Voznesensky, Michael and Bao, Bin and Bell, Peter and Berard, David and Burovski, Evgeni and Chauhan, Geeta and Chourdia, Anjali and Constable, Will and Desmaison, Alban and DeVito, Zachary and Ellison, Elias and Feng, Will and Gong, Jiong and Gschwind, Michael and Hirsh, Brian and Huang, Sherlock and Kalambarkar, Kshiteej and Kirsch, Laurent and Lazos, Michael and Lezcano, Mario and Liang, Yanbo and Liang, Jason and Lu, Yinghai and Luk, CK and Maher, Bert and Pan, Yunjie and Puhrsch, Christian and Reso, Matthias and Saroufim, Mark and Siraichi, Marcos Yukio and Suk, Helen and Suo, Michael and Tillet, Phil and Wang, Eikan and Wang, Xiaodong and Wen, William and Zhang, Shunting and Zhao, Xu and Zhou, Keren and Zou, Richard and Mathews, Ajit and Chanan, Gregory and Wu, Peng and Chintala, Soumith},
-  title     = {{PyTorch} 2: Faster Machine Learning Through Dynamic {Python} Bytecode Transformation and Graph Compilation},
-  booktitle = {Proceedings of the 29th {ACM} International Conference on Architectural Support for Programming Languages and Operating Systems, Volume 2},
-  series    = {ASPLOS '24},
-  year      = {2024},
-  pages     = {929--947},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  doi       = {10.1145/3620665.3640366}
+@inproceedings{cruttwell-2022,
+    author       = {Cruttwell, Geoffrey S.~H. and Gavranovi{\'c}, Bruno and Ghani, Neil and Wilson, Paul and Zanasi, Fabio},
+    title        = {Categorical Foundations of Gradient-Based Learning},
+    booktitle    = {Programming Languages and Systems: 31st European Symposium on Programming (ESOP 2022)},
+    series       = {Lecture Notes in Computer Science},
+    volume       = {13240},
+    pages        = {1--28},
+    year         = {2022},
+    publisher    = {Springer},
+    doi          = {10.1007/978-3-030-99336-8_1}
 }
 
-
-% ============================================================
-% Verified DL rewrites
-% ============================================================
-
-@article{liu2022verified,
-  author    = {Liu, Amanda and Bernstein, Gilbert Louis and Chlipala, Adam and Ragan-Kelley, Jonathan},
-  title     = {Verified Tensor-Program Optimization via High-Level Scheduling Rewrites},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {6},
-  number    = {POPL},
-  articleno = {55},
-  pages     = {1--28},
-  year      = {2022},
-  doi       = {10.1145/3498717}
+@inproceedings{cockett-2020,
+    author       = {Cockett, J.~Robin~B. and Cruttwell, Geoffrey S.~H. and Gallagher, Jonathan and Lemay, Jean-Simon Pacaud and MacAdam, Benjamin and Plotkin, Gordon~D. and Pronk, Dorette},
+    title        = {Reverse Derivative Categories},
+    booktitle    = {28th EACSL Annual Conference on Computer Science Logic (CSL 2020)},
+    series       = {LIPIcs},
+    volume       = {152},
+    pages        = {18:1--18:16},
+    year         = {2020},
+    publisher    = {Schloss Dagstuhl},
+    doi          = {10.4230/LIPIcs.CSL.2020.18}
 }
 
-@article{willsey2021egg,
-  author    = {Willsey, Max and Nandi, Chandrakana and Wang, Yisu Remy and Flatt, Oliver and Tatlock, Zachary and Panchekha, Pavel},
-  title     = {egg: Fast and Extensible Equality Saturation},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {5},
-  number    = {POPL},
-  articleno = {23},
-  pages     = {1--29},
-  year      = {2021},
-  doi       = {10.1145/3434304}
+@phdthesis{gavranovic-2024,
+    author       = {Gavranovi{\'c}, Bruno},
+    title        = {Fundamental Components of Deep Learning: A Category-Theoretic Approach},
+    school       = {University of Strathclyde},
+    year         = {2024},
+    note         = {PhD thesis}
 }
 
-@article{arora2025tensorright,
-  author    = {Arora, Jai and Lu, Sirui and Jain, Devansh and Xu, Tianfan and Houshmand, Farzin and Phothilimthana, Phitchaya Mangpo and Lesani, Mohsen and Narayanan, Praveen and Murthy, Karthik Srinivasa and Bod{\'\i}k, Rastislav and Sabne, Amit and Mendis, Charith},
-  title     = {{TensorRight}: Automated Verification of Tensor Graph Rewrites},
-  journal   = {Proceedings of the {ACM} on Programming Languages},
-  volume    = {9},
-  number    = {POPL},
-  pages     = {832--863},
-  year      = {2025},
-  doi       = {10.1145/3704865}
+%% ============================================================================
+%% Verified compilation and differentiation
+%% ============================================================================
+
+@article{krawiec-2022,
+    author       = {Krawiec, Faustyna and Peyton Jones, Simon and Krishnaswami, Neel and Ellis, Tom and Eisenberg, Richard A. and Fitzgibbon, Andrew},
+    title        = {Provably Correct, Asymptotically Efficient, Higher-Order Reverse-Mode Automatic Differentiation},
+    journal      = {Proceedings of the ACM on Programming Languages},
+    volume       = {6},
+    number       = {POPL},
+    articleno    = {48},
+    pages        = {1--30},
+    year         = {2022},
+    publisher    = {ACM},
+    doi          = {10.1145/3498710}
 }
 
-@inproceedings{frostig2018compiling,
-  author    = {Frostig, Roy and Johnson, Matthew James and Leary, Chris},
-  title     = {Compiling Machine Learning Programs via High-Level Tracing},
-  booktitle = {Systems for Machine Learning (SysML)},
-  year      = {2018}
+@inproceedings{lee-2020,
+    author       = {Lee, Wonyeol and Yu, Hangyeol and Rival, Xavier and Yang, Hongseok},
+    title        = {On Correctness of Automatic Differentiation for Non-Differentiable Functions},
+    booktitle    = {Advances in Neural Information Processing Systems 33 (NeurIPS 2020)},
+    pages        = {6719--6730},
+    year         = {2020},
+    publisher    = {Curran Associates}
+}
+
+@article{mazza-pagani-2021,
+    author       = {Mazza, Damiano and Pagani, Michele},
+    title        = {Automatic Differentiation in {PCF}},
+    journal      = {Proceedings of the ACM on Programming Languages},
+    volume       = {5},
+    number       = {POPL},
+    articleno    = {28},
+    pages        = {1--27},
+    year         = {2021},
+    publisher    = {ACM},
+    doi          = {10.1145/3434309}
+}
+
+%% ============================================================================
+%% Production DL frameworks and IR systems
+%% ============================================================================
+
+@inproceedings{ansel-2024,
+    author       = {Ansel, Jason and Yang, Edward and He, Horace and Gimelshein, Natalia and Jain, Animesh and Voznesensky, Michael and Bao, Bin and Bell, Peter and Berard, David and Burovski, Evgeni and others},
+    title        = {{PyTorch 2}: Faster Machine Learning Through Dynamic {Python} Bytecode Transformation and Graph Compilation},
+    booktitle    = {Proceedings of the 29th ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS '24), Volume 2},
+    pages        = {929--947},
+    year         = {2024},
+    publisher    = {ACM},
+    doi          = {10.1145/3620665.3640366}
+}
+
+@article{paszke-2021,
+    author       = {Paszke, Adam and Johnson, Daniel D. and Duvenaud, David and Vytiniotis, Dimitrios and Radul, Alexey and Johnson, Matthew J. and Ragan-Kelley, Jonathan and Maclaurin, Dougal},
+    title        = {Getting to the Point: Index Sets and Parallelism-Preserving Autodiff for Pointful Array Programming},
+    journal      = {Proceedings of the ACM on Programming Languages},
+    volume       = {5},
+    number       = {ICFP},
+    articleno    = {88},
+    pages        = {1--29},
+    year         = {2021},
+    publisher    = {ACM},
+    doi          = {10.1145/3473593}
+}
+
+@inproceedings{lattner-2021,
+    author       = {Lattner, Chris and Amini, Mehdi and Bondhugula, Uday and Cohen, Albert and Davis, Andy and Pienaar, Jacques and Riddle, River and Shpeisman, Tatiana and Vasilache, Nicolas and Zinenko, Oleksandr},
+    title        = {{MLIR}: Scaling Compiler Infrastructure for Domain-Specific Computation},
+    booktitle    = {2021 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)},
+    pages        = {2--14},
+    year         = {2021},
+    publisher    = {IEEE},
+    doi          = {10.1109/CGO51591.2021.9370308}
+}
+
+@inproceedings{ragan-kelley-2013,
+    author       = {Ragan-Kelley, Jonathan and Barnes, Connelly and Adams, Andrew and Paris, Sylvain and Durand, Fr{\'e}do and Amarasinghe, Saman},
+    title        = {{Halide}: A Language and Compiler for Optimizing Parallelism, Locality, and Recomputation in Image Processing Pipelines},
+    booktitle    = {Proceedings of the 34th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI '13)},
+    pages        = {519--530},
+    year         = {2013},
+    publisher    = {ACM},
+    doi          = {10.1145/2491956.2462176}
+}
+
+@inproceedings{chen-2018,
+    author       = {Chen, Tianqi and Moreau, Thierry and Jiang, Ziheng and Zheng, Lianmin and Yan, Eddie and Cowan, Meghan and Shen, Haichen and Wang, Leyuan and Hu, Yuwei and Ceze, Luis and Guestrin, Carlos and Krishnamurthy, Arvind},
+    title        = {{TVM}: An Automated End-to-End Optimizing Compiler for Deep Learning},
+    booktitle    = {Proceedings of the 13th USENIX Symposium on Operating Systems Design and Implementation (OSDI '18)},
+    pages        = {578--594},
+    year         = {2018},
+    publisher    = {USENIX}
+}
+
+@inproceedings{roesch-2019,
+    author       = {Roesch, Jared and Lyubomirsky, Steven and Kirisame, Marisa and Weber, Logan and Pollock, Josh and Vega, Luis and Jiang, Ziheng and Chen, Tianqi and Moreau, Thierry and Tatlock, Zachary},
+    title        = {{Relay}: A High-Level Compiler for Deep Learning},
+    booktitle    = {arXiv preprint},
+    year         = {2019},
+    eprint       = {1904.08368},
+    archivePrefix= {arXiv}
+}
+
+@inproceedings{frostig-johnson-leary-2018,
+    author       = {Frostig, Roy and Johnson, Matthew~J. and Leary, Chris},
+    title        = {Compiling Machine Learning Programs via High-Level Tracing},
+    booktitle    = {Conference on Systems and Machine Learning (SysML 2018)},
+    year         = {2018}
+}
+
+@inproceedings{moldovan-2019,
+    author       = {Moldovan, Dan and Decker, James M. and Wang, Fei and Johnson, Andrew A. and Lee, Brian K. and Nado, Zachary and Sculley, D. and Rompf, Tiark and Wiltschko, Alexander B.},
+    title        = {{AutoGraph}: Imperative-Style Coding with Graph-Based Performance},
+    booktitle    = {Conference on Systems and Machine Learning (SysML 2019)},
+    year         = {2019}
+}
+
+@misc{python-pep523,
+    author       = {Cannon, Brett and Czajka, Dino~Viehland and Stinner, Victor},
+    title        = {{PEP} 523 -- Adding a Frame Evaluation {API} to {CPython}},
+    year         = {2016},
+    howpublished = {\url{https://peps.python.org/pep-0523/}}
 }

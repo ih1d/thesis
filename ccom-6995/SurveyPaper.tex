@@ -4,11 +4,32 @@
 \usepackage[nonamebreak,round]{natbib}
 \usepackage{tikz}
 \usepackage{stmaryrd}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
 \usetikzlibrary{positioning, arrows.meta, fit, calc, backgrounds}
 
 \bibliographystyle{plainnat}
 
-\title{REFLECTION AT THE REWRITE LAYER\@: A CATEGORICAL FRAMEWORK FOR SOURCE-EXTENSIBLE VERIFIED TRANSFORMATION IN DATAFLOW IRs}
+%% --- Theorem-like environments ---------------------------------------------
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+%% --- Semantic-bracket shorthand --------------------------------------------
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+\newcommand{\Code}{\mathsf{Code}}
+\newcommand{\quo}[1]{\langle #1 \rangle}
+\newcommand{\anti}[1]{\sim\! #1}
+
+%% Working title from the outline:
+%%   "Reflection as Functor: A Categorical Reading of Graph-Capture in
+%%    Deep-Learning Frameworks"
+%% Adjust as needed; keeping the title in the template for now.
+\title{On Bounded Reflection as a Mechanism for Verified Translation Extension}
 
 \author{Isaac H. Lopez D\'iaz}
 
@@ -20,7 +41,19 @@
 
 \supervisortitle{Faculty of Natural Sciences, Department of Computer Science}
 
-\abstract{}
+\abstract{%
+%% Three-sentence abstract from the outline. Expand into ~150--200 words
+%% once the body is stable.
+DL frameworks all implement a source-to-source transformation --- a
+staging boundary, in the sense of multi-stage programming --- from an
+imperative host program to a captured computational graph. Under a
+categorical reading this boundary is a functor whose faithfulness is the
+framework's de facto correctness criterion, but no shipping framework
+establishes that faithfulness rigorously. We survey the design space,
+characterize the failures of functoriality in each system, and propose a
+typed reflective language in which the staging functor is constructed by
+elaboration and faithfulness is a theorem.
+}
 
 \begin{document}
 \maketitle
@@ -41,6 +74,21 @@
 %==================================================================
 
 \chapter{Introduction}
+\label{ch:introduction}
+
+%% Draft introduction kept verbatim from the outline; will need to be split
+%% into sections (Contextualization / Relevance / Motivation as the rubric
+%% requests) and lightly edited before submission.
+
+Every modern deep-learning framework solves the same problem twice. First, it offers an eager imperative interface --- write Python that builds tensors, call functions that perform operations, get answers back. Second, it offers a graph-capture mechanism --- \texttt{jax.jit}, \texttt{torch.compile}, \texttt{@tf.function} --- that takes the same Python and produces a computational graph suitable for compilation, autodifferentiation, and deployment. This second mechanism is, in the vocabulary of programming-languages research, a \emph{source-to-source transformation}: a translation from one program text (a host-language fragment) into another (a graph IR), whose implicit correctness criterion is the preservation of the source program's semantics. The graph-capture mechanism is uniformly the part of the framework that practitioners learn to fear: silent retracing, mysteriously baked-in constants, host-side side effects that execute exactly once, dynamic shapes that defeat specialization. Frameworks document these hazards as engineering rules of thumb. They do not, as a rule, treat them as semantic facts.
+
+This paper argues that they are semantic facts, and that programming-language theory has the tools to say what they are. A graph-capture mechanism is, in categorical terms, a functor from a category of source programs to a category whose morphisms are computational graphs. Two interpretations are then in play: the source-level meaning of a program (what it computes when run directly) and the graph-level meaning (what the captured graph denotes). The framework's implicit correctness criterion is that these two interpretations agree --- that the capture functor is \emph{faithful} with respect to denotational equivalence. The well-known hazards of \texttt{jit} and \texttt{compile} are precisely the failures of faithfulness: programs that have one meaning when run eagerly and another when captured.
+
+The corresponding question for automatic differentiation has received careful treatment from the programming-languages community. \citet{krawiec-2022} gave a provably correct higher-order reverse-mode AD with a logical-relations correctness proof. \citet{lee-2020} addressed correctness in the presence of non-differentiable functions. \citet{cruttwell-2022} gave a categorical semantics of gradient-based learning in terms of parametric lenses and reverse derivative categories. The same level of rigor has not been brought to bear on the staging primitive that precedes AD --- the act of capturing the graph in the first place.
+
+This paper surveys the design space of graph capture across six representative systems --- JAX, PyTorch~2's TorchDynamo, TensorFlow AutoGraph, MLIR, Halide/TVM, and Dex --- and reads each through a single categorical lens: what is the source category, what is the target category, what is the functor, and where does faithfulness fail? Read in this way, the systems differ less than their engineering vocabularies suggest. They are all instances of multi-stage programming in the sense of \citet{taha-sheard-2000}, elaborated through a staging modality in the sense of \citet{davies-pfenning-2001}. What distinguishes them is how aggressively they hide the staging boundary from the user, and how badly that hiding interacts with the host language's semantics.
+
+The paper's contribution is twofold. First, it offers the categorical reading itself: a uniform vocabulary in which the gap between, say, JAX's tracer and TorchDynamo's bytecode rewriter is a question about which morphisms in $\mathbf{Set}$ lift along the capture functor. Second, drawing on the survey, it proposes a reflective core language with a typed staging modality, in which the capture functor is constructed by elaboration from the type system and faithfulness is a theorem provable by standard logical-relations techniques. The proposal is conceptual rather than implemented; the implementation is the subject of the author's ongoing thesis work on the reflective language Blue.
 
 
 %==================================================================
@@ -52,6 +100,62 @@
 %==================================================================
 
 \chapter{Theoretical Foundations}
+\label{ch:foundations}
+
+%% Three subsections, each ~500--700 words. The closing synthesis is short.
+
+\section{Reflection, Staging, and Modal Type Theory}
+\label{sec:foundations-staging}
+
+%% To write:
+%% - Smith (1984) on reflection: programs reasoning about their own
+%%   representation. Set up "unbounded" reflection as the contrast point.
+%% - Taha-Sheard quotation/antiquotation: the multi-stage tradition that
+%%   bounded reflection by typing.
+%% - Davies-Pfenning's $\Box$ modality from constructive S4 as the
+%%   type-theoretic underpinning. Code $\tau$ as the type of quoted code.
+%% - Position Blue's em in this lineage: em is a degenerate antiquotation
+%%   whose surrounding quotation is implicit and whose host is fixed.
+%% Citations: smith-1984, taha-sheard-2000, davies-pfenning-2001.
+
+\section{Categorical Semantics of Programs}
+\label{sec:foundations-cat-programs}
+
+%% To write:
+%% - Cartesian closed categories as denotational targets.
+%% - Elliott's "compiling to categories" pattern: a program is a polymorphic
+%%   morphism, and choosing a CCC is choosing a compilation target.
+%% - State the slogan explicitly. This is the key sentence the reader
+%%   should remember.
+%% - Set up the functor / faithfulness vocabulary that Chapter 4 sharpens.
+%% Citations: moggi-1991, elliott-2017.
+
+\section{Categorical Semantics of Differentiable Programs}
+\label{sec:foundations-cat-dl}
+
+%% To write:
+%% - Fong-Spivak-Tuyeras: backprop as a functor Para -> Learn.
+%% - Cruttwell et al.: reverse derivative categories, parametric lenses.
+%% - Gavranovic's thesis as the synthesis.
+%% - Key intuition the reader should leave with:
+%%     * A neural network is a morphism in Para(Smooth).
+%%     * Training is post-composition with a lens.
+%%     * A "computational graph" is a presentation of a morphism in a freely
+%%       generated symmetric monoidal category.
+%% Citations: fong-spivak-tuyeras-2019, cockett-2020, cruttwell-2022,
+%%            gavranovic-2024.
+
+\section{Synthesis: Staging as a Functor over the DL Target}
+\label{sec:foundations-synthesis}
+
+%% Short closing section. Snap the two pieces together:
+%% - Staging is a functor from a syntactic category of source programs to
+%%   a "graph" category.
+%% - The graph category must itself be a faithful site for the DL-categorical
+%%   semantics.
+%% - The framework is a 2-stage compilation; both stages are functorial;
+%%   faithfulness is required at both.
+%% This is the conceptual bridge to Chapter 3.
 
 
 %==================================================================
@@ -63,7 +167,129 @@
 %==================================================================
 
 \chapter{Literature Review}
+\label{ch:litreview}
 
+%% Organizational principle: NOT chronological. Group systems by what
+%% category the framework's graph IR is presenting and what functor it
+%% claims to be. Close with a comparison table.
+
+\section{Free Symmetric Monoidal Categories over a Primitive Signature}
+\label{sec:litreview-free-smc}
+
+%% Systems: Halide, Dex, MLIR's linalg dialect.
+%% Argument:
+%% - Closest to the theoretical ideal.
+%% - Faithfulness is plausible because the source category is small.
+%% - Cost: user gives up the host language.
+%% Citations: ragan-kelley-2013, paszke-2021, lattner-2021.
+
+\section{Quasi-Categorical Operator-Overloading Traces}
+\label{sec:litreview-tracing}
+
+%% Systems: JAX, Autograd.
+%% Argument:
+%% - Functor is well-behaved on pure code.
+%% - Breaks on Python control flow, random sampling, mutation.
+%% - Documented warnings, but not a type discipline.
+%% Citations: frostig-johnson-leary-2018.
+
+\section{AST-Rewriting Functors}
+\label{sec:litreview-ast-rewriting}
+
+%% Systems: TensorFlow AutoGraph.
+%% Argument:
+%% - "Functor" is whatever the rewriter does.
+%% - Soundness rests on the rewriter being semantics-preserving --- a
+%%   meta-theorem nobody proves.
+%% - Documented failure cases (closures, generators, side-effecting loop
+%%   bodies) are pushed to the user.
+%% Citations: moldovan-2019.
+
+\section{Frame-Evaluation Reflective Functors}
+\label{sec:litreview-bytecode}
+
+%% Systems: TorchDynamo / PyTorch 2.
+%% Argument:
+%% - The most powerful and least disciplined mechanism in production.
+%% - The "functor" inspects Python bytecode and falls back to host
+%%   execution on guard failure --- so it isn't a function at all, it's
+%%   a partial map with retry.
+%% Citations: ansel-2024, python-pep523.
+
+\section{Verified Functors}
+\label{sec:litreview-verified}
+
+%% Systems: Krawiec et al., Lee et al., Mazza--Pagani.
+%% Argument:
+%% - These prove the analogous correctness theorem for AD.
+%% - No corresponding theorem exists for tracing.
+%% - THIS IS THE GAP. State it explicitly.
+%% Citations: krawiec-2022, lee-2020, mazza-pagani-2021.
+
+\section{Comparative Synthesis}
+\label{sec:litreview-synthesis}
+
+Table~\ref{tab:comparison} summarizes the six framework families along five
+axes: source category, target category, what the capture functor is, the
+known unsoundness patterns, and whether a correctness theorem is available.
+
+\begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{p{2.0cm}p{2.3cm}p{2.3cm}p{2.4cm}p{2.4cm}p{1.4cm}}
+        \hline
+        \textbf{System} & \textbf{Source cat.} & \textbf{Target cat.} & \textbf{Functor} & \textbf{Known unsoundness} & \textbf{Thm.} \\
+        \hline
+        JAX            & %% TODO: pure Python on arrays
+                       & %% TODO: free SMC over jaxprs
+                       & %% TODO: op-overloading on abstract tracers
+                       & %% TODO: control flow / random / mutation
+                       & %% TODO: no
+                       \\
+        TF AutoGraph   & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       \\
+        TorchDynamo    & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       \\
+        Halide / TVM   & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       \\
+        Dex            & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       \\
+        MLIR           & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       & %% TODO
+                       \\
+        \hline
+    \end{tabular}
+    \caption{Graph-capture mechanisms across six DL framework families,
+    organized categorically.}
+    \label{tab:comparison}
+\end{table}
+
+%% Closing prose for this section:
+%% Two patterns to identify from the filled-in table:
+%% (1) The systems with the strongest soundness story require the user to
+%%     give up the host language (Halide, Dex).
+%% (2) The systems with the friendliest interface have the weakest soundness
+%%     story (TorchDynamo, AutoGraph).
+%% The proposal in Chapter 5 lives in the gap between (1) and (2).
 
 
 %==================================================================
@@ -75,6 +301,57 @@
 %==================================================================
 
 \chapter{Analysis}
+\label{ch:analysis}
+
+%% Sharpen the technical limitations under the categorical lens. Each
+%% section names a categorical law and identifies which framework idiom
+%% violates it.
+
+\section{Failure of Functoriality on Composition}
+\label{sec:analysis-composition}
+
+%% Argument: trace(f . g) != trace(f) . trace(g) whenever g returns Python
+%% values that f branches on. Classic JAX/Dynamo retracing.
+%% Worked example to add: a shape-dependent branch -> retracing on shape
+%% change. Show the JAX or Dynamo idiom explicitly.
+
+\section{Failure of Functoriality on Identity}
+\label{sec:analysis-identity}
+
+%% Argument: trace(id) = id only modulo guards firing. The unit law holds
+%% operationally but not denotationally.
+%% Consequence: rewrites that should be admissible under IR-equivalence may
+%% not be admissible under the guard-augmented relation the framework
+%% maintains.
+
+\section{Lack of Naturality}
+\label{sec:analysis-naturality}
+
+%% Argument: refactorings that should be natural transformations --- e.g.,
+%% moving vmap past pure functions --- hold only under undocumented side
+%% conditions. The commutations are real but not type-system enforced.
+
+\section{Forgetful Loss of Source Information}
+\label{sec:analysis-forgetful}
+
+%% Argument: the graph category forgets the syntactic structure of the
+%% source. Refactoring tools, debuggers, and static analyzers that operate
+%% on the IR therefore operate on a stripped-down representation.
+%% This is the connection to the course's "refactoring" and "code smells"
+%% themes.
+
+\section{Impact}
+\label{sec:analysis-impact}
+
+%% Tie back to the course's "industrial ML" theme.
+%% Argument:
+%% - Silent unsoundness in torch.compile is the same category of bug as
+%%   silent floating-point nondeterminism.
+%% - Same effect on reproducibility.
+%% - Same effect on maintainability: source-level edits do not have
+%%   predictable effects on the captured graph.
+%% Cite reproducibility/maintainability literature here once specific course
+%% references are in hand.
 
 
 %==================================================================
@@ -85,122 +362,108 @@
 %==================================================================
 %==================================================================
 
-\chapter{New Proposal}
-\section{How would you use the existing literature to design a new solution?}
-\section{What techniques will you combine?}
-\section{What limitations will you resolve?}
-\section{What conceptual architecture would it have?}
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[
-    node distance = 0.7cm and 1.0cm,
-    font          = \small,
-    box/.style    = {draw, rounded corners=2pt, align=center,
-                     minimum height=0.85cm, inner sep=4pt, inner ysep=5pt},
-    user/.style   = {box, fill=red!8,    draw=red!50!black},
-    pipe/.style   = {box, fill=blue!8,   draw=blue!50!black},
-    alg/.style    = {box, fill=gray!10,  draw=black!60, minimum width=5.5cm},
-    store/.style  = {box, fill=green!12, draw=green!45!black},
-    meta/.style   = {box, fill=orange!15,draw=orange!60!black},
-    val/.style    = {box, fill=white,    draw=black!70, minimum width=1.6cm},
-    arr/.style    = {-{Latex[length=2mm]}, semithick},
-    fb/.style     = {-{Latex[length=2mm]}, semithick, dashed,
-                     draw=orange!60!black},
-    cmp/.style    = {{Latex[length=2mm]}-{Latex[length=2mm]},
-                     semithick, dashed, draw=black!60}
-  ]
+\chapter{New Proposal: Blue+}
+\label{ch:proposal}
 
-  % ------------------ Top: user + REPL ------------------
-  \node[user] (user) {User};
-  \node[pipe, right=1.0cm of user, minimum width=8cm] (repl)
-        {\textbf{REPL} \\
-         \footnotesize \texttt{:proc}~~\texttt{:graph-eval}~~\texttt{:compare}~~%
-         \texttt{:graph}~~\texttt{:clauses}};
+%% Brief framing paragraph: Blue+ is a reflective core language whose four
+%% ingredients address the failures characterized in Chapter 4 and close
+%% the gap identified in Chapter 3.
 
-  % ------------------ Compile pipeline (center column) ------------------
-  \node[pipe, below=1.0cm of repl] (src)
-        {Surface syntax\\\footnotesize Blue source (expressions, statements, clause declarations)};
+\section{Davies--Pfenning Modal Core}
+\label{sec:proposal-modal-core}
 
-  \node[alg, below=of src] (alg)
-        {\textbf{Tagless-final algebra}\\
-         \footnotesize \texttt{class BlueExpr repr where ...}\\
-         \footnotesize \texttt{class BlueStmt m where ...}};
+%% Ingredient 1.
+%% - Code $\tau$ as a first-class type.
+%% - Quotation $\langle \cdot \rangle$ and antiquotation $\sim \cdot$.
+%% - Blue's em is the degenerate case: antiquotation whose surrounding
+%%   quotation is implicit and whose host is fixed.
 
-  % ------------------ Two interpretations ------------------
-  \node[pipe, below left=1.0cm and 0.6cm of alg] (proc)
-        {\texttt{ProcRepr}\\\footnotesize procedural $\llbracket\cdot\rrbracket_P$};
-  \node[pipe, below right=1.0cm and 0.6cm of alg] (graph)
-        {\texttt{GraphRepr}\\\footnotesize translation $T$};
+\section{Effect Typing on the Staged Fragment}
+\label{sec:proposal-effects}
 
-  % ------------------ Store + graph evaluator ------------------
-  \node[store, below=of graph] (store)
-        {Graph (store)\\\footnotesize built incrementally};
-  \node[pipe, below=of store] (geval)
-        {Graph evaluator $\llbracket\cdot\rrbracket_G$};
+%% Ingredient 2.
+%% - No effects inside quotation: the staged fragment must be pure.
+%% - Enforced statically, not discovered at trace time.
+%% - Dex's effect system as the working precedent.
 
-  % ------------------ Outputs ------------------
-  \node[val, below=3.45cm of proc] (pval) {Value};
-  \node[val, below=of geval]       (gval) {Value};
+\section{Categorical Elaboration}
+\label{sec:proposal-elaboration}
 
-  % ------------------ Reflection cycle (right column) ------------------
-  \node[meta, right=2.4cm of graph] (reg)
-        {Clause registry\\\footnotesize $\{\kappa_1, \kappa_2, \dots\}$};
-  \node[meta, above=of reg] (admit)
-        {\texttt{admit}\\\footnotesize adequacy check\\\footnotesize (sampling vs.~$\llbracket\cdot\rrbracket_P$)};
-  \node[user, above=of admit] (decl)
-        {\texttt{declareClause}\\\footnotesize statement in Blue source};
+%% Ingredient 3.
+%% - Well-typed Blue+ programs elaborate to morphisms in a polymorphic CCC.
+%% - Choosing the category chooses the backend:
+%%     * Haskell (->) for evaluation.
+%%     * A free SMC for graph emission.
+%%     * A reverse-derivative category for AD.
+%% - Cite Elliott's "compiling to categories" as the direct template.
 
-  % ------------------ Arrows: compile pipeline ------------------
-  \draw[arr] (user) -- (repl);
-  \draw[arr] (repl) -- (src);
-  \draw[arr] (src)  -- node[right]{\footnotesize parse} (alg);
-  \draw[arr] (alg.south)  -- ++(0,-0.15) -| (proc.north);
-  \draw[arr] (alg.south)  -- ++(0,-0.15) -| (graph.north);
-  \draw[arr] (graph) -- (store);
-  \draw[arr] (store) -- (geval);
-  \draw[arr] (proc)  -- (pval);
-  \draw[arr] (geval) -- (gval);
+\section{The Faithfulness Theorem}
+\label{sec:proposal-theorem}
 
-  % ------------------ Arrows: reflection cycle ------------------
-  \draw[fb] (alg.east) to[out=0, in=180] (decl.west);
-  \draw[fb] (decl) -- (admit);
-  \draw[fb] (admit) -- node[right,align=left]{\footnotesize add\\\footnotesize if ok} (reg);
-  \draw[fb] (reg) -- node[above, align=center]{\footnotesize extends $T$} (graph);
+%% Ingredient 4. State the theorem informally:
 
-  % ------------------ The agreement check ------------------
-  \draw[cmp] (pval) -- node[below=1pt, align=center]
-              {\footnotesize \texttt{:compare} --- agreement\\
-               \footnotesize $\llbracket T(e) \rrbracket_G \stackrel{?}{=} \llbracket e \rrbracket_P$} (gval);
+\begin{theorem}[Faithfulness, informal]
+    For all well-typed Blue$+$ programs $e$, the diagram commutes:
+    evaluating $e$ in $\mathbf{Set}$ agrees with the universal interpretation
+    of its elaboration in the free graph category.
+\end{theorem}
 
-  % ------------------ Optional: faint backdrop grouping ------------------
-  \begin{scope}[on background layer]
-    \node[draw=black!15, rounded corners, fit=(src) (alg) (proc) (graph) (store) (geval) (pval) (gval), inner sep=8pt] {};
-    \node[draw=orange!30, rounded corners, fit=(decl) (admit) (reg), inner sep=8pt] {};
-  \end{scope}
+%% Proof sketch (to write):
+%% - Logical-relations argument indexed by staging level.
+%% - In the style of Krawiec et al.'s correctness proof for AD.
+%% - Cases for $\beta\eta$ from the CCC laws.
+%% - Case for Code from the comonad structure on the modality.
 
-\end{tikzpicture}
+\section{Conceptual Architecture}
+\label{sec:proposal-architecture}
 
-\caption{Conceptual architecture of Blue.
-A Blue program is parsed into a tagless-final algebra with two
-interpretations: a procedural interpretation \texttt{ProcRepr}
-realizing $\llbracket\cdot\rrbracket_P$, and a translation interpretation
-\texttt{GraphRepr} realizing $T$, which builds a graph that serves as the
-runtime store. The graph is evaluated via $\llbracket\cdot\rrbracket_G$.
-A Blue source program may also include \texttt{declareClause} statements
-which install new translation clauses; each clause is checked for adequacy
-against $\llbracket\cdot\rrbracket_P$ on admission and, if accepted,
-extends $T$ for subsequent translation. The \texttt{:compare} command
-in the REPL evaluates a program under both interpretations and reports
-whether they agree, giving the user a runtime witness of the adequacy
-property the system maintains.}
-\label{fig:architecture}
+The compilation pipeline is sketched in Figure~\ref{fig:architecture}: typed
+core syntax elaborates into a generic CCC interface, which is then
+instantiated at a concrete category.
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[
+        node distance=14mm,
+        box/.style={draw, rounded corners=2pt, minimum width=28mm, minimum height=9mm, align=center, font=\small},
+        arr/.style={-{Stealth[length=2mm]}, thick},
+    ]
+        \node[box] (src) {Blue+ source};
+        \node[box, right=of src] (typed) {Typed core\\(modal IR)};
+        \node[box, right=of typed] (ccc) {CCC interface\\(polymorphic)};
+        \node[box, above right=8mm and 14mm of ccc] (eval) {Evaluator\\$\mathbf{Set}$};
+        \node[box, right=of ccc] (graph) {Graph emitter\\$\mathsf{Free}(\Sigma)$};
+        \node[box, below right=8mm and 14mm of ccc] (ad) {Reverse-mode AD\\$\mathbf{RDC}$};
+
+        \draw[arr] (src) -- node[above, font=\scriptsize] {parse} (typed);
+        \draw[arr] (typed) -- node[above, font=\scriptsize] {elaborate} (ccc);
+        \draw[arr] (ccc) -- (eval);
+        \draw[arr] (ccc) -- (graph);
+        \draw[arr] (ccc) -- (ad);
+
+        \begin{pgfonlayer}{background}
+            \node[draw=gray, dashed, rounded corners, fit=(eval) (graph) (ad), inner sep=4mm, label={[gray, font=\scriptsize]above:back-ends}] {};
+        \end{pgfonlayer}
+    \end{tikzpicture}
+    \caption{The compiling-to-categories template, with the staging modality
+    made explicit and faithfulness a theorem rather than a hope.}
+    \label{fig:architecture}
 \end{figure}
 
-\section{What kind of evaluation would it need?}
-Conceptual evaluation: the algebra-coverage property is typechecked; the adequacy check catches a sample of disagreements on test inputs; the worked example (loops + mutable state) demonstrates the system handles a construct outside the base translation.
-Comparative evaluation: against TorchDynamo (translation is sound by check, not opportunistic), against TensorRight (translation extension rather than graph rewrite), against MLIR (reflective rather than statically declared extensions).
-Future evaluation: once mechanized, the adequacy theorem replaces sampling with a proof. Stating this as future evaluation is honest and shows you understand the trajectory.
+\section{Evaluation Methodology}
+\label{sec:proposal-evaluation}
+
+%% Three modes of evaluation:
+%% (i)   Prove faithfulness for the core calculus.
+%% (ii)  Demonstrate that each unsoundness pattern surveyed in Chapter 4 is
+%%       statically rejected by Blue+'s type system.
+%% (iii) Sketch a worked example --- a tiny MLP --- compiled three ways
+%%       (Haskell evaluator, graph emitter, reverse-mode AD) from one source.
+%%
+%% Be honest about scope: this is conceptual. The contribution is the design
+%% and the theorem, not a production system.
+
+
 %==================================================================
 %==================================================================
 %
@@ -210,6 +473,14 @@ Future evaluation: once mechanized, the adequacy theorem replaces sampling with 
 %==================================================================
 
 \chapter{Conclusion}
+\label{ch:conclusion}
+
+%% Short. ~500 words. Carry the closing slogan:
+%% - The DL community has rediscovered staged programming the hard way.
+%% - The PL community has rediscovered DL the categorical way.
+%% - The thesis of this paper is that those two rediscoveries are the same
+%%   rediscovery, and that a reflective language with a typed staging
+%%   modality is the right vehicle for making it rigorous.
 
 \end{mainf}
 
